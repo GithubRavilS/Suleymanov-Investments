@@ -3,40 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suleymanov Investments | Institutional DeFi Yield</title>
+    <title>SYCapital | Structured DeFi Yield</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        
         body {
             background-color: #0B0F1A;
             color: #FFFFFF;
             font-family: 'Inter', system-ui, sans-serif;
             line-height: 1.6;
         }
+        
         .container { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
         
-        /* Header */
+        /* ===== HEADER ===== */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: rgba(11, 15, 26, 0.8);
+            background-color: rgba(11, 15, 26, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 50;
             padding: 16px 0;
         }
-        header .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 20px; }
-        .logo-box { width: 40px; height: 40px; background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #0B0F1A; }
-        nav { display: flex; gap: 32px; align-items: center; }
-        nav a { font-size: 14px; font-weight: 500; color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: all 0.3s; }
-        nav a:hover { color: white; }
-        .lang-toggle { display: flex; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 8px; }
-        .lang-btn { padding: 8px 12px; border: none; background: transparent; color: rgba(255, 255, 255, 0.7); cursor: pointer; font-size: 12px; font-weight: 500; border-radius: 4px; transition: all 0.3s; }
-        .lang-btn.active { background: #F2994A; color: #0B0F1A; }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 20px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0B0F1A;
+            font-weight: 800;
+            font-size: 18px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        nav a {
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover { color: #F2994A; }
+        
+        .lang-toggle {
+            display: flex;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 8px;
+            margin-left: 24px;
+        }
+        
+        .lang-btn {
+            padding: 8px 12px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn.active {
+            background: #F2994A;
+            color: #0B0F1A;
+        }
+        
         .btn-primary {
             padding: 12px 32px;
             background: #F2994A;
@@ -47,8 +112,12 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
         }
-        .btn-primary:hover { background: #FFB366; }
+        
+        .btn-primary:hover { background: #FFB366; transform: translateY(-2px); }
+        
         .btn-secondary {
             padding: 12px 32px;
             background: transparent;
@@ -59,34 +128,53 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
         }
-        .btn-secondary:hover { background: rgba(47, 128, 237, 0.1); }
+        
+        .btn-secondary:hover { background: rgba(47, 128, 237, 0.1); transform: translateY(-2px); }
         
         @media (max-width: 768px) {
             nav { display: none; }
             .btn-primary { display: none; }
         }
         
-        /* Sections */
-        section { padding: 96px 0; }
-        section h2 { font-size: 48px; font-weight: 700; margin-bottom: 16px; }
-        section .subtitle { font-size: 20px; color: rgba(255, 255, 255, 0.7); }
-        
-        /* Hero */
+        /* ===== HERO ===== */
         #hero {
             padding-top: 160px;
+            padding-bottom: 96px;
             position: relative;
             overflow: hidden;
         }
-        #hero .content { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-bottom: 80px; }
-        #hero h1 { font-size: 60px; font-weight: 700; margin-bottom: 24px; line-height: 1.2; }
-        #hero .buttons { display: flex; gap: 16px; margin-top: 32px; }
+        
+        #hero .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+        
+        #hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        
+        #hero .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
         
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
+            margin-bottom: 32px;
         }
+        
         .metric-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -95,25 +183,170 @@
             border-radius: 12px;
             transition: all 0.3s;
         }
-        .metric-card:hover { background: rgba(255, 255, 255, 0.08); }
-        .metric-label { color: rgba(255, 255, 255, 0.6); font-size: 14px; margin-bottom: 8px; }
-        .metric-value { font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .stats-bar {
-            margin-top: 80px;
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .metric-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(242, 153, 74, 0.3);
+        }
+        
+        .metric-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .metric-value.text-accent {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            -webkit-text-fill-color: #2FD970;
+            color: #2FD970;
+        }
+        .metric-value.metric-text {
+            font-size: 21px;
+            line-height: 1.25;
+            text-transform: none;
+            letter-spacing: 0;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.92);
+            color: rgba(255, 255, 255, 0.92);
+        }
+        html[lang="ru"] .metric-label {
+            font-size: 12px;
+            letter-spacing: 0.02em;
+        }
+        html[lang="ru"] .metric-value.metric-text {
+            font-size: 19px;
+            line-height: 1.22;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-chart {
+            position: relative;
+            height: 300px;
+        }
+        
+        .chart-block-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 6px;
+        }
+        .chart-block-sub {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .chart-disclaimer {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+        
+        .metrics-footnote {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: -8px;
+            margin-bottom: 8px;
+        }
+        
+        .hero-cta-note {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 12px;
+        }
+        
+        .operator-stats {
+            margin-top: 20px;
+            padding: 16px 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .operator-stats p {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.75);
+        }
+        .operator-stats p:last-child { margin-bottom: 0; }
+        
+        .live-data-note {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .sample-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        
+        .table-loading, .chart-loading {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+            padding: 12px 0;
+        }
+        
+        @media (max-width: 768px) {
+            #hero .content {
+                grid-template-columns: 1fr;
+            }
+            #hero h1 { font-size: 40px; }
+            html[lang="ru"] .metric-value.metric-text { font-size: 18px; }
+            .metrics-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 96px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        section h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        section .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 48px;
+        }
+        
+        /* ===== HOW IT WORKS ===== */
+        .how-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 32px;
+            margin-top: 48px;
         }
-        .stat { text-align: center; }
-        .stat-value { font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
-        .stat-label { color: rgba(255, 255, 255, 0.6); font-size: 14px; }
         
-        /* Strategy */
-        #strategy .content { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
-        .strategy-card {
+        .how-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -121,813 +354,1691 @@
             border-radius: 12px;
             transition: all 0.3s;
         }
-        .strategy-card:hover { background: rgba(255, 255, 255, 0.1); }
-        .strategy-card h3 { font-size: 24px; margin-bottom: 8px; }
-        .strategy-card .desc { color: rgba(255, 255, 255, 0.6); margin-bottom: 16px; }
-        .strategy-box { background: #1A1F2E; padding: 16px; border-radius: 8px; margin-bottom: 16px; }
-        .strategy-box .label { color: rgba(255, 255, 255, 0.6); font-size: 12px; margin-bottom: 4px; }
-        .strategy-box .value { font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Performance */
-        #performance { background: linear-gradient(to bottom, #1A1F2E 0%, #0B0F1A 100%); }
-        .charts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 48px; }
-        .chart-card {
+        .how-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(242, 153, 74, 0.3);
+            transform: translateY(-8px);
+        }
+        
+        .how-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+        
+        .how-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .how-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .how-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* ===== PERFORMANCE ===== */
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .perf-stat {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 32px;
             border-radius: 12px;
-        }
-        .chart-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 24px; }
-        .chart-container { position: relative; height: 300px; }
-        
-        .summary-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
-        .summary-stat {
-            background: #1A1F2E;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px;
-            border-radius: 8px;
             text-align: center;
         }
-        .summary-stat .label { color: rgba(255, 255, 255, 0.6); font-size: 12px; margin-bottom: 8px; }
-        .summary-stat .value { font-size: 24px; font-weight: 700; color: #F2994A; }
         
-        /* Risk */
-        #risk { background: linear-gradient(to bottom, #0B0F1A 0%, #1A1F2E 100%); }
-        .risk-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 48px; }
-        .risk-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 32px;
-            border-radius: 12px;
-            display: flex;
-            gap: 16px;
+        .perf-stat .label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
         }
-        .risk-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-        .risk-content h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-        .risk-content p { color: rgba(255, 255, 255, 0.7); font-size: 14px; }
         
-        /* Process */
-        .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
-        .process-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 32px;
-            border-radius: 12px;
-            position: relative;
-        }
-        .process-num {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0B0F1A;
+        .perf-stat .value {
+            font-size: 32px;
             font-weight: 700;
-            font-size: 20px;
-            margin-bottom: 16px;
+            background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .process-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-        .process-card p { color: rgba(255, 255, 255, 0.6); font-size: 14px; }
+        .perf-stat .value.text-accent {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            -webkit-text-fill-color: #2FD970;
+            color: #2FD970;
+        }
+        .perf-stat .subvalue {
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.58);
+        }
         
-        /* FAQ */
-        #faq { max-width: 800px; }
-        .faq-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+        .chart-container {
+            position: relative;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 16px;
-        }
-        .faq-question {
             padding: 24px;
-            cursor: pointer;
+            margin-bottom: 32px;
+        }
+        
+        @media (max-width: 768px) {
+            .performance-grid { grid-template-columns: 1fr !important; }
+            .chart-container { height: 300px; }
+        }
+        
+        /* ===== LIVE DATA ===== */
+        .live-data-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .live-data-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .live-data-header h3 {
+            font-size: 18px;
             font-weight: 600;
+        }
+        
+        .data-source {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .data-btn {
+            padding: 10px 20px;
+            background: rgba(47, 128, 237, 0.1);
+            border: 1px solid #2F80ED;
+            color: #2F80ED;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
             transition: all 0.3s;
         }
-        .faq-question:hover { background: rgba(255, 255, 255, 0.08); }
-        .faq-answer { padding: 0 24px 24px; color: rgba(255, 255, 255, 0.7); display: none; }
-        .faq-answer.active { display: block; }
-        .faq-question.active { background: rgba(255, 255, 255, 0.08); }
         
-        /* CTA */
-        #cta { position: relative; overflow: hidden; }
-        #cta .form-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 48px;
-            border-radius: 12px;
-            max-width: 600px;
-            margin: 32px auto;
+        .data-btn:hover {
+            background: rgba(47, 128, 237, 0.2);
         }
-        .form-group { margin-bottom: 24px; }
-        .form-label { display: block; font-size: 14px; font-weight: 500; color: rgba(255, 255, 255, 0.8); margin-bottom: 8px; }
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: #0B0F1A;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        
+        .table-responsive {
+            overflow-x: auto;
             border-radius: 8px;
-            color: white;
-            font-family: inherit;
-            transition: all 0.3s;
         }
-        .form-input:focus { outline: none; border-color: #F2994A; }
         
-        /* Footer */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        table thead {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        table th {
+            padding: 16px;
+            text-align: left;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        table td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        table .yield {
+            color: #2FD970;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .live-data-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        /* ===== CASE STUDY ===== */
+        .case-study-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+        
+        .case-details {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 32px;
+        }
+        
+        .case-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .case-item:last-child {
+            border-bottom: none;
+        }
+        
+        .case-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+        
+        .case-value {
+            font-weight: 600;
+            color: #F2994A;
+        }
+        
+        .case-chart {
+            position: relative;
+            height: 350px;
+        }
+        
+        @media (max-width: 768px) {
+            .case-study-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* ===== RISK ===== */
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        
+        .risk-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 32px;
+        }
+        
+        .risk-card h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .risk-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .risk-card ul {
+            list-style: none;
+            margin-top: 12px;
+        }
+        
+        .risk-card li {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .risk-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2FD970;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .risk-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* ===== CTA ===== */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(242, 153, 74, 0.1) 0%, rgba(47, 128, 237, 0.05) 100%);
+            border: 1px solid rgba(242, 153, 74, 0.3);
+            border-radius: 12px;
+            padding: 64px 32px;
+            text-align: center;
+            margin-top: 96px;
+        }
+        
+        .cta-section h2 {
+            margin-bottom: 16px;
+        }
+        
+        .cta-section p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+        }
+        
+        .cta-section .buttons {
+            justify-content: center;
+        }
+        
+        /* ===== FOOTER ===== */
         footer {
-            background: #1A1F2E;
+            background: rgba(255, 255, 255, 0.02);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 64px 0 32px;
             margin-top: 96px;
         }
-        .footer-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; margin-bottom: 48px; }
-        .footer-section h4 { font-weight: 700; margin-bottom: 16px; }
-        .footer-section ul { list-style: none; }
-        .footer-section li { margin-bottom: 12px; }
-        .footer-section a { color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 14px; transition: all 0.3s; }
-        .footer-section a:hover { color: white; }
-        .footer-disclaimer {
-            background: rgba(242, 153, 74, 0.1);
-            border: 1px solid rgba(242, 153, 74, 0.2);
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 32px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.7);
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            margin-bottom: 48px;
         }
+        
+        .footer-section h4 {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #F2994A;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: #F2994A;
+            border-color: #F2994A;
+            color: #0B0F1A;
+        }
+        
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.5);
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.4);
         }
         
         @media (max-width: 768px) {
-            #hero .content { grid-template-columns: 1fr; }
-            .charts-grid { grid-template-columns: 1fr; }
-            .process-grid { grid-template-columns: repeat(2, 1fr); }
-            #strategy .content { grid-template-columns: 1fr; }
-            .stats-bar { grid-template-columns: 1fr; }
-            .risk-grid { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr; }
-            nav { gap: 16px; }
-            section { padding: 64px 0; }
+            .footer-content { grid-template-columns: repeat(2, 1fr); }
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        /* ===== OPERATOR BLOCK ===== */
+        .operator-section {
+            background: linear-gradient(135deg, rgba(242, 153, 74, 0.05) 0%, rgba(47, 128, 237, 0.03) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 64px 0;
+            margin: 96px 0;
+        }
+        
+        .operator-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 64px;
+            align-items: center;
+        }
+        
+        .operator-photo {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        
+        .operator-photo::before {
+            content: "";
+            position: absolute;
+            width: 82%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(242, 153, 74, 0.22) 0%, rgba(47, 128, 237, 0.12) 42%, rgba(11, 15, 26, 0) 72%);
+            filter: blur(2px);
+            z-index: 0;
+            transform: translateY(14%);
+            pointer-events: none;
+        }
+        
+        .operator-photo-img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            filter: drop-shadow(0 20px 45px rgba(8, 12, 22, 0.75)) drop-shadow(0 10px 22px rgba(242, 153, 74, 0.18));
+            object-fit: contain;
+            object-position: center top;
+        }
+        
+        .operator-text h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #F2994A 0%, #FFB366 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .operator-text p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .operator-text ul {
+            list-style: none;
+            margin: 24px 0;
+        }
+        
+        .operator-text li {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            padding: 12px 0 12px 32px;
+            position: relative;
+        }
+        
+        .operator-text li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #F2994A;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .operator-highlight {
+            background: rgba(242, 153, 74, 0.1);
+            border-left: 3px solid #F2994A;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+        
+        .operator-highlight p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .operator-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .operator-section {
+                padding: 48px 0;
+                margin: 48px 0;
+            }
+            .operator-text h3 {
+                font-size: 24px;
+            }
+            .operator-photo {
+                order: -1;
+            }
+        }
+        
+        /* ===== UTILITIES ===== */
+        .accent { color: #F2994A; }
+        .hidden { display: none; }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- ===== HEADER ===== -->
     <header>
         <div class="container">
-            <div class="logo">
-                <div class="logo-box">SI</div>
-                <span id="company-name">Suleymanov</span>
-            </div>
+            <a href="#hero" class="logo">
+                <div class="logo-box">S</div>
+                <span>SYCapital</span>
+            </a>
             <nav>
-                <a href="#home" id="nav-home">Home</a>
-                <a href="#strategy" id="nav-strategy">Strategy</a>
-                <a href="#performance" id="nav-performance">Performance</a>
-                <a href="#about" id="nav-about">About</a>
+                <a href="#how" data-en="How It Works" data-ru="Как это работает">How It Works</a>
+                <a href="#operator" data-en="About" data-ru="О фонде">About</a>
+                <a href="#performance" data-en="Performance" data-ru="Результаты">Performance</a>
+                <a href="#data" data-en="Live Data" data-ru="Live данные">Live Data</a>
+                <a href="#risk" data-en="Risk" data-ru="Риски">Risk</a>
             </nav>
-            <div style="display: flex; gap: 12px; align-items: center;">
-                <div class="lang-toggle">
-                    <button class="lang-btn active" onclick="setLang('en')" id="lang-en">EN</button>
-                    <button class="lang-btn" onclick="setLang('ru')" id="lang-ru">RU</button>
-                </div>
-                <button class="btn-primary" id="nav-request">Request Allocation</button>
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="switchLang('en')">EN</button>
+                <button class="lang-btn" onclick="switchLang('ru')">RU</button>
             </div>
+            <a href="https://t.me/ravilinvest" target="_blank" rel="noopener" class="btn-primary" data-en="Get Started" data-ru="Начать">Get Started</a>
         </div>
     </header>
 
-    <!-- Hero -->
+    <!-- ===== HERO ===== -->
     <section id="hero">
         <div class="container">
             <div class="content">
                 <div>
-                    <h1 id="hero-title">Institutional DeFi Yield Strategies</h1>
-                    <p id="hero-subtitle" style="font-size: 20px; color: rgba(255,255,255,0.7); margin-bottom: 32px;">Systematic capital allocation across DeFi protocols to generate stable yield and long-term crypto exposure</p>
-                    <div class="buttons" style="display: flex; gap: 16px;">
-                        <button class="btn-primary" id="hero-request">Request Allocation</button>
-                        <button class="btn-secondary" id="hero-view">View Strategy</button>
+                    <h1 data-en="20–40% annual yield from structured DeFi strategies" data-ru="20–40% APY от структурных DeFi-стратегий">
+                        20–40% annual yield from structured DeFi strategies
+                    </h1>
+                    <p class="subtitle" data-en="Cashflow-driven strategy based on liquidity provision. Capital allocations from 50K+." data-ru="Стратегия непрерывного денежного потока на базе предоставления ликвидности. Для размещения капитала от 50K+.">
+                        Cashflow-driven strategy based on liquidity provision. Capital allocations from 50K+.
+                    </p>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label" data-en="2025 Live Statistics (APY)" data-ru="Статистика APY за 2025 год">2025 Live Statistics (APY)</div>
+                            <div class="metric-value text-accent">34.4%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label" data-en="Return Source" data-ru="Источник доходности">Return Source</div>
+                            <div class="metric-value metric-text">
+                                <span data-en="Fee-based income" data-ru="Комиссионный доход">Fee-based income</span><br>
+                                <span data-en="DEX liquidity" data-ru="DEX-ликвидность">DEX liquidity</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label" data-en="Execution Layer" data-ru="Исполнение стратегии">Execution Layer</div>
+                            <div class="metric-value metric-text" data-en="Fully on-chain & verifiable" data-ru="Полностью on-chain и проверяемо">Fully on-chain & verifiable</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label" data-en="Market Correlation" data-ru="Корреляция с рынком">Market Correlation</div>
+                            <div class="metric-value metric-text" data-en="Low" data-ru="Низкая">Low</div>
+                        </div>
                     </div>
+                    <p class="metrics-footnote" data-en="Based on live positions (2025–2026)" data-ru="На основе живых позиций (2025–2026)">Based on live positions (2025–2026)</p>
+                    
+                    <div class="buttons">
+                        <a href="https://t.me/ravilinvest" target="_blank" rel="noopener" class="btn-primary" data-en="Request Allocation" data-ru="Запросить размещение">Request Allocation</a>
+                    </div>
+                    <p class="hero-cta-note" data-en="Private capital only • Limited capacity" data-ru="Только частный капитал • Ограниченная ёмкость">Private capital only • Limited capacity</p>
                 </div>
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <div class="metric-label" id="metric1-label">Target Return</div>
-                        <div class="metric-value">20–35% APY</div>
+                
+                <div>
+                    <div class="chart-block-title" data-en="Annual yield — last 12 months" data-ru="Годовая доходность — последние 12 мес.">Annual yield — last 12 months</div>
+                    <div class="hero-chart">
+                        <div id="heroChartLoading" class="chart-loading">Loading chart…</div>
+                        <canvas id="heroChart"></canvas>
                     </div>
-                    <div class="metric-card">
-                        <div class="metric-label" id="metric2-label">Strategy Type</div>
-                        <div class="metric-value">BTC + DeFi</div>
+                    <div class="buttons" style="margin-top: 14px;">
+                        <a href="#data" class="btn-secondary" data-en="Live Data" data-ru="Live данные">Live Data</a>
                     </div>
-                    <div class="metric-card">
-                        <div class="metric-label" id="metric3-label">Risk Profile</div>
-                        <div class="metric-value">Moderate</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label" id="metric4-label">Allocation</div>
-                        <div class="metric-value" style="font-size: 16px;">Multi-layer</div>
-                    </div>
-                </div>
-            </div>
-            <div class="stats-bar">
-                <div class="stat">
-                    <div class="stat-value">$50M+</div>
-                    <div class="stat-label" id="stat1-label">Capital Deployed</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">12+</div>
-                    <div class="stat-label" id="stat2-label">Protocols Integrated</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">18mo</div>
-                    <div class="stat-label" id="stat3-label">Track Record</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Strategy -->
-    <section id="strategy">
+    <!-- ===== HOW IT WORKS ===== -->
+    <section id="how">
         <div class="container">
-            <h2 id="strategy-title">Investment Strategies</h2>
-            <p class="subtitle" id="strategy-subtitle">Three institutional-grade approaches to capital allocation</p>
-            <div class="content">
-                <div class="strategy-card">
-                    <h3 id="strat1-title">Stable Yield</h3>
-                    <p class="desc" id="strat1-desc">Low volatility, consistent income</p>
-                    <div class="strategy-box">
-                        <div class="label" id="strat1-apy-label">Target Return</div>
-                        <div class="value">10–15% APY</div>
-                    </div>
-                    <div class="strategy-box">
-                        <div class="label" id="strat1-risk-label">Risk Level</div>
-                        <div class="value" style="color: #2F80ED;">Low Risk</div>
-                    </div>
-                    <button class="btn-secondary" style="width: 100%; margin-top: 16px;" id="strat1-view">View Details</button>
+            <h2 data-en="How the Income is Generated" data-ru="Как генерируется доход">How the Income is Generated</h2>
+            <p class="subtitle" data-en="We operate as liquidity providers and capital allocators, capturing fees and yield from market activity" data-ru="Мы работаем как поставщики ликвидности и аллокаторы капитала, зарабатывая на комиссиях и рыночной активности">
+                We operate as liquidity providers and capital allocators, capturing fees and yield from market activity
+            </p>
+            
+            <div class="how-grid">
+                <div class="how-card">
+                    <div class="how-icon">💧</div>
+                    <h3 data-en="Liquidity Provision" data-ru="Предоставление ликвидности">Liquidity Provision</h3>
+                    <p data-en="Deploy capital into DeFi pools and earn from trading fees generated by constant market activity" data-ru="Размещаем капитал в DeFi-пулы и зарабатываем на торговых комиссиях при постоянной рыночной активности">
+                        Deploy capital into DeFi pools and earn from trading fees generated by constant market activity
+                    </p>
                 </div>
-                <div class="strategy-card">
-                    <h3 id="strat2-title">Balanced BTC + DeFi</h3>
-                    <p class="desc" id="strat2-desc">Optimal risk-return profile</p>
-                    <div class="strategy-box">
-                        <div class="label" id="strat2-apy-label">Target Return</div>
-                        <div class="value">20–35% APY</div>
-                    </div>
-                    <div class="strategy-box">
-                        <div class="label" id="strat2-risk-label">Risk Level</div>
-                        <div class="value">Moderate Risk</div>
-                    </div>
-                    <button class="btn-secondary" style="width: 100%; margin-top: 16px;" id="strat2-view">View Details</button>
+                
+                <div class="how-card">
+                    <div class="how-icon">🏦</div>
+                    <h3 data-en="Lending & Borrowing" data-ru="Кредитование">Lending & Borrowing</h3>
+                    <p data-en="Capitalize on interest rate differentials and lending yield across major protocols" data-ru="Используем разницу ставок и доход от кредитования в крупнейших протоколах">
+                        Capitalize on interest rate differentials and lending yield across major protocols
+                    </p>
                 </div>
-                <div class="strategy-card">
-                    <h3 id="strat3-title">Aggressive BTC Growth</h3>
-                    <p class="desc" id="strat3-desc">Maximum exposure to upside</p>
-                    <div class="strategy-box">
-                        <div class="label" id="strat3-apy-label">Target Return</div>
-                        <div class="value">30–50% APY</div>
-                    </div>
-                    <div class="strategy-box">
-                        <div class="label" id="strat3-risk-label">Risk Level</div>
-                        <div class="value" style="color: #FF6B6B;">High Risk</div>
-                    </div>
-                    <button class="btn-secondary" style="width: 100%; margin-top: 16px;" id="strat3-view">View Details</button>
+                
+                <div class="how-card">
+                    <div class="how-icon">⚙️</div>
+                    <h3 data-en="Infrastructure Yield" data-ru="Инфраструктурный доход">Infrastructure Yield</h3>
+                    <p data-en="Earn from transaction flow, not price speculation." data-ru="Доход от потока транзакций, а не от спекуляций на цене.">
+                        Earn from transaction flow, not price speculation.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Performance -->
+    <!-- ===== WHY IT WORKS ===== -->
+    <section>
+        <div class="container">
+            <h2 data-en="We Earn Like Infrastructure, Not Traders" data-ru="Мы зарабатываем как инфраструктура, а не как трейдеры">We Earn Like Infrastructure, Not Traders</h2>
+            <p class="subtitle" data-en="Instead of betting on price direction, we capture fees from transaction flow and capital demand" data-ru="Мы не ставим на движение цены — мы зарабатываем на потоке транзакций и спросе на капитал">
+                Instead of betting on price direction, we capture fees from transaction flow and capital demand
+            </p>
+            
+            <div class="how-grid">
+                <div class="how-card">
+                    <div class="how-icon">✓</div>
+                    <h3 data-en="Consistent Revenue" data-ru="Стабильный доход">Consistent Revenue</h3>
+                    <p data-en="Monthly income flows regardless of market conditions. Your profit comes from protocol activity, not speculation." data-ru="Ежемесячный доход поступает независимо от рыночных условий. Ваша прибыль зависит от протокольной деятельности, а не от спекуляций.">
+                        Monthly income flows regardless of market conditions. Your profit comes from protocol activity, not speculation.
+                    </p>
+                </div>
+                
+                <div class="how-card">
+                    <div class="how-icon">🔐</div>
+                    <h3 data-en="Collateralized Positions" data-ru="Обеспеченные позиции">Collateralized Positions</h3>
+                    <p data-en="Every allocation maintains conservative LTV (30–40%) with no leverage loops. Capital preservation is paramount." data-ru="Каждое размещение поддерживает консервативное LTV (30–40%) без циклов рычага. Сохранение капитала имеет первостепенное значение.">
+                        Every allocation maintains conservative LTV (30–40%) with no leverage loops. Capital preservation is paramount.
+                    </p>
+                </div>
+                
+                <div class="how-card">
+                    <div class="how-icon">📊</div>
+                    <h3 data-en="Multi-Layer Diversification" data-ru="Многоуровневая диверсификация">Multi-Layer Diversification</h3>
+                    <p data-en="Spread across protocols, assets, and strategies to reduce idiosyncratic risk." data-ru="Диверсификация по протоколам, активам и стратегиям снижает специфические риски.">
+                        Spread across protocols, assets, and strategies to reduce idiosyncratic risk.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== OPERATOR: RAVIL ===== -->
+    <section id="operator" class="operator-section">
+        <div class="container">
+            <div class="operator-content">
+                <div class="operator-photo">
+                    <img src="operator-photo-silhouette.png" alt="Ravil Crypto - Founder" class="operator-photo-img">
+                </div>
+                
+                <div class="operator-text">
+                    <h3 data-en="Operator Behind SYCapital" data-ru="Кто стоит за SYCapital">
+                        Operator Behind SYCapital
+                    </h3>
+                    
+                    <p data-en="I manage institutional capital through DeFi infrastructure, focusing on consistent yield generation rather than market speculation." data-ru="Я управляю институциональным капиталом через DeFi-инфраструктуру, делая ставку на стабильный доход, а не на рыночные спекуляции.">
+                        I manage institutional capital through DeFi infrastructure, focusing on consistent yield generation rather than market speculation.
+                    </p>
+                    
+                    <div class="operator-stats">
+                        <p data-en="Managing DeFi capital since 2022" data-ru="Управляю капиталом в DeFi с 2022 года">Managing DeFi capital since 2022</p>
+                        <p data-en="$2M+ allocated across strategies" data-ru="$2M+ размещено по стратегиям">$2M+ allocated across strategies</p>
+                        <p data-en="50+ active clients" data-ru="50+ активных клиентов">50+ active clients</p>
+                    </div>
+                    
+                    <p data-en="My approach differs fundamentally from traditional investing:" data-ru="Мой подход принципиально отличается от классического инвестирования:">
+                        My approach differs fundamentally from traditional investing:
+                    </p>
+                    
+                    <ul>
+                        <li data-en="No trading bets. No price direction guesses. Just infrastructure revenue." data-ru="Без торговых ставок. Без попыток угадать направление цены. Только инфраструктурный доход.">
+                            No trading bets. No price direction guesses. Just infrastructure revenue.
+                        </li>
+                        <li data-en="Manual protocol selection. Hand-picked strategies across Aave, Curve, and other established ecosystems." data-ru="Ручной выбор протоколов. Тщательно отобранные стратегии на Aave, Curve и других устоявшихся экосистемах.">
+                            Manual protocol selection. Hand-picked strategies across Aave, Curve, and other established ecosystems.
+                        </li>
+                        <li data-en="Strict risk control. Every position collateralized with 30–40% LTV. No leverage loops." data-ru="Строгий контроль риска. Каждая позиция обеспечена залогом с 30–40% LTV. Никаких циклов рычага.">
+                            Strict risk control. Every position collateralized with 30–40% LTV. No leverage loops.
+                        </li>
+                        <li data-en="Public accountability. Real-time portfolio tracking. You see what I earn." data-ru="Публичная ответственность. Отслеживание портфеля в реальном времени. Вы видите, что я зарабатываю.">
+                            Public accountability. Real-time portfolio tracking. You see what I earn.
+                        </li>
+                    </ul>
+                    
+                    <div class="operator-highlight">
+                        <p data-en="💡 The proof is in the data. I share anonymized allocation records, performance metrics, and transaction hashes. Not a course. Not a fund pitch. Just transparent capital management." data-ru="💡 Лучшее доказательство — данные. Я публикую анонимизированные аллокации, метрики и хэши транзакций. Это не курс и не продажа фонда — это прозрачное управление капиталом.">
+                            💡 The proof is in the data. I share anonymized allocation records, performance metrics, and transaction hashes. Not a course. Not a fund pitch. Just transparent capital management.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PERFORMANCE ===== -->
     <section id="performance">
         <div class="container">
-            <h2 id="perf-title">Performance Metrics</h2>
-            <p class="subtitle" id="perf-subtitle">Consistent yield generation with risk-managed exposure</p>
-            <div class="charts-grid">
-                <div class="chart-card">
-                    <h3 id="chart1-title">Yearly Returns (2016-2026)</h3>
-                    <div class="chart-container"><canvas id="yearlyChart"></canvas></div>
+            <h2 data-en="Performance" data-ru="Результаты">Performance</h2>
+            <p class="subtitle" data-en="Recorded monthly results and an illustrative band for how capital can move around the trend." data-ru="Фактические помесячные результаты и иллюстративный коридор движения капитала относительно тренда.">
+                Recorded monthly results and an illustrative band for how capital can move around the trend.
+            </p>
+            
+            <div class="performance-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="perf-stat">
+                    <div class="label" data-en="Strategy target (annual range)" data-ru="Цель стратегии (годовой диапазон)">Strategy target (annual range)</div>
+                    <div class="value text-accent">20–40%</div>
+                    <div class="subvalue" data-en="~1.7–3.3% monthly" data-ru="~1,7–3,3% в месяц">~1.7–3.3% monthly</div>
                 </div>
-                <div class="chart-card">
-                    <h3 id="chart2-title">Portfolio Value Growth</h3>
-                    <div class="chart-container"><canvas id="growthChart"></canvas></div>
+                <div class="perf-stat">
+                    <div class="label" data-en="Recent monthly outcomes (range)" data-ru="Недавняя месячная доходность (диапазон)">Recent monthly outcomes (range)</div>
+                    <div class="value">1.7–3.3%</div>
+                    <div class="subvalue" data-en="From last 12 observed months" data-ru="По данным за последние 12 месяцев">From last 12 observed months</div>
+                </div>
+                <div class="perf-stat">
+                    <div class="label" data-en="Position volatility (annualized)" data-ru="Волатильность позиции (годовая)">Position volatility (annualized)</div>
+                    <div class="value" id="perfVolatilityValue">--</div>
+                    <div class="subvalue" data-en="Net 6M corridor incl. carry: ~-10% to +25%" data-ru="Чистый 6-месячный коридор с учетом дохода: ~-10%...+25%">Net 6M corridor incl. carry: ~-10% to +25%</div>
+                </div>
+                <div class="perf-stat">
+                    <div class="label" data-en="Sharpe ratio (annualized)" data-ru="Коэффициент Шарпа (годовой)">Sharpe ratio (annualized)</div>
+                    <div class="value" id="perfSharpeValue">--</div>
+                    <div class="subvalue" data-en="Benchmark: 50/50 ETH staking + USD lending (~5% p.a.)" data-ru="Бенчмарк: 50/50 ETH-стейкинг + USD lending (~5% годовых)">Benchmark: 50/50 ETH staking + USD lending (~5% p.a.)</div>
                 </div>
             </div>
-            <div class="chart-card" style="margin-top: 32px;">
-                <h3 id="chart3-title">2025 Monthly Performance</h3>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                    <span></span>
-                    <div style="text-align: right;">
-                        <div style="color: rgba(255,255,255,0.6); font-size: 12px;" id="avg-label">Average Monthly Return</div>
-                        <div style="font-size: 24px; font-weight: 700; color: #F2994A;">4.7%</div>
-                    </div>
-                </div>
-                <div class="chart-container"><canvas id="monthlyChart"></canvas></div>
+            
+            <div class="chart-container">
+                <div class="chart-block-title" data-en="Last 12 months — yield by month" data-ru="Последние 12 месяцев — доходность по месяцам">Last 12 months — yield by month</div>
+                <div id="perfBarLoading" class="chart-loading">Loading chart…</div>
+                <canvas id="monthlyYieldChart"></canvas>
             </div>
-            <div class="summary-stats">
-                <div class="summary-stat">
-                    <div class="label" id="best-year-label">Best Year</div>
-                    <div class="value">65%</div>
-                </div>
-                <div class="summary-stat">
-                    <div class="label" id="cagr-label">10-Year CAGR</div>
-                    <div class="value">28.5%</div>
-                </div>
-                <div class="summary-stat">
-                    <div class="label" id="total-label">Total Return</div>
-                    <div class="value">845%</div>
-                </div>
-                <div class="summary-stat">
-                    <div class="label" id="sharpe-label">Sharpe Ratio</div>
-                    <div class="value">2.14</div>
-                </div>
+            
+            <div class="chart-container">
+                <div class="chart-block-title" data-en="Capital path (illustrative volatility band)" data-ru="Траектория капитала (иллюстративный коридор волатильности)">Capital path (illustrative volatility band)</div>
+                <div class="chart-block-sub" data-en="Early quarters: position can be down to about -25% or up to about +10% vs entry; band persists over time. Illustration only — not a forecast." data-ru="В первые кварталы позиция может уходить примерно до −25% или до +10% к входу; коридор сохраняется и дальше. Только иллюстрация — не прогноз.">Early quarters: position can be down to about -25% or up to about +10% vs entry; band persists over time. Illustration only — not a forecast.</div>
+                <canvas id="capitalBandChart"></canvas>
+                <p class="chart-disclaimer" data-en="Based on historical yield distribution. Not a projection or guarantee." data-ru="На основе исторического распределения доходности. Не прогноз и не гарантия.">Based on historical yield distribution. Not a projection or guarantee.</p>
             </div>
         </div>
     </section>
 
-    <!-- Risk Management -->
+    <!-- ===== LIVE DATA ===== -->
+    <section id="data">
+        <div class="container">
+            <h2 data-en="Live Portfolio & Verified Data" data-ru="Актуальные позиции и верифицированные данные">Live Portfolio & Verified Data</h2>
+            <p class="subtitle" data-en="On-chain positions with public links." data-ru="Позиции on-chain с публичными ссылками.">
+                On-chain positions with public links.
+            </p>
+            
+            <p class="live-data-note" data-en="All data is sourced from live on-chain positions. Each entry can be independently verified." data-ru="Все данные из живых ончейн-позиций. Каждую запись можно независимо проверить.">
+                All data is sourced from live on-chain positions. Each entry can be independently verified.
+            </p>
+            
+            <div class="live-data-container">
+                <div class="live-data-header">
+                    <h3 data-en="Recent positions" data-ru="Недавние позиции">Recent positions</h3>
+                    <div class="data-source">
+                        <a href="https://docs.google.com/spreadsheets/d/1nwMDeiA6Z7cN0FJwQ1WMBH8bG74VMObvZCmMZAg5Kjg/edit?gid=0#gid=0" target="_blank" rel="noopener" class="data-btn" data-en="📊 Download Full Dataset" data-ru="📊 Скачать полный датасет">📊 Download Full Dataset</a>
+                        <a href="https://docs.google.com/spreadsheets/d/1nwMDeiA6Z7cN0FJwQ1WMBH8bG74VMObvZCmMZAg5Kjg/edit?gid=0#gid=0" target="_blank" rel="noopener" class="data-btn" data-en="🔗 Verify On-Chain" data-ru="🔗 Проверить в сети">🔗 Verify On-Chain</a>
+                    </div>
+                </div>
+                
+                <p class="sample-label" data-en="Sample anonymized positions" data-ru="Пример анонимизированных позиций">Sample anonymized positions</p>
+                <div id="publicTableLoading" class="table-loading">Loading positions…</div>
+                <div class="table-responsive">
+                    <table id="publicPositionsTable">
+                        <thead>
+                            <tr>
+                                <th data-en="Position ID" data-ru="ID позиции">Position ID</th>
+                                <th data-en="Open Date" data-ru="Дата открытия">Open Date</th>
+                                <th data-en="Duration" data-ru="Длительность">Duration</th>
+                                <th data-en="APY" data-ru="APY">APY</th>
+                                <th data-en="Status" data-ru="Статус">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="publicPositionsBody">
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p style="color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 16px;" data-en="Identifiers are shortened for privacy. Capital amounts are not shown." data-ru="Идентификаторы сокращены для приватности. Суммы капитала не отображаются.">
+                    Identifiers are shortened for privacy. Capital amounts are not shown.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== RISK ===== -->
     <section id="risk">
         <div class="container">
-            <h2 id="risk-title">Risk-First Approach</h2>
-            <p class="subtitle" id="risk-subtitle">Capital preservation through systematic risk management</p>
-            <div class="risk-grid">
+            <h2 data-en="Risk & Stability (Drawdown Dynamics)" data-ru="Риск и стабильность (динамика просадок)">Risk & Stability (Drawdown Dynamics)</h2>
+            <p class="subtitle" data-en="Clear expectations for institutional allocators." data-ru="Понятные ожидания для институциональных инвесторов.">
+                Clear expectations for institutional allocators.
+            </p>
+            
+            <div class="risk-grid" style="grid-template-columns: 1fr; max-width: 900px;">
                 <div class="risk-card">
-                    <div class="risk-icon">🔒</div>
-                    <div class="risk-content">
-                        <h3 id="risk1-title">LTV Control</h3>
-                        <p id="risk1-desc">Max Loan-to-Value ratio maintained at 30–40%</p>
-                    </div>
-                </div>
-                <div class="risk-card">
-                    <div class="risk-icon">⚡</div>
-                    <div class="risk-content">
-                        <h3 id="risk2-title">Protocol Diversification</h3>
-                        <p id="risk2-desc">Exposure spread across multiple battle-tested DeFi protocols</p>
-                    </div>
-                </div>
-                <div class="risk-card">
-                    <div class="risk-icon">📉</div>
-                    <div class="risk-content">
-                        <h3 id="risk3-title">No Leverage Loops</h3>
-                        <p id="risk3-desc">Avoid recursive borrowing that amplifies cascading risk</p>
-                    </div>
-                </div>
-                <div class="risk-card">
-                    <div class="risk-icon">💧</div>
-                    <div class="risk-content">
-                        <h3 id="risk4-title">Liquidity Management</h3>
-                        <p id="risk4-desc">Zero exposure to illiquid tokens or experimental protocols</p>
-                    </div>
+                    <ul>
+                        <li data-en="Strategy generates consistent fee income regardless of market direction." data-ru="Стратегия генерирует стабильный доход от комиссий независимо от направления рынка.">Strategy generates consistent fee income regardless of market direction.</li>
+                        <li data-en="Primary risk is temporary capital drawdown, not yield degradation." data-ru="Основной риск — временная просадка капитала, а не деградация доходности.">Primary risk is temporary capital drawdown, not yield degradation.</li>
+                        <li data-en="In volatile or trending markets, positions may experience -10% to -30% unrealized drawdown due to price movement and impermanent loss." data-ru="На волатильном или трендовом рынке позиции могут показывать -10%...-30% нереализованной просадки из-за движения цены и impermanent loss.">In volatile or trending markets, positions may experience -10% to -30% unrealized drawdown due to price movement and impermanent loss.</li>
+                        <li data-en="Fee generation continues during drawdowns and historically compensates these effects over time." data-ru="Генерация комиссий продолжается во время просадок и исторически со временем компенсирует эти эффекты.">Fee generation continues during drawdowns and historically compensates these effects over time.</li>
+                        <li data-en="Break-even period depends on volatility and ranges, typically 1–3 months." data-ru="Период выхода в ноль зависит от волатильности и диапазонов, обычно 1–3 месяца.">Break-even period depends on volatility and ranges, typically 1–3 months.</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Process -->
-    <section id="process">
+    <!-- ===== OPERATOR: RAVIL (SECOND PLACEMENT) ===== -->
+    <section class="operator-section">
         <div class="container">
-            <h2 id="process-title">How It Works</h2>
-            <p class="subtitle" id="process-subtitle">Simple process from allocation to returns</p>
-            <div class="process-grid">
-                <div class="process-card">
-                    <div class="process-num">1</div>
-                    <h3 id="proc1-title">Apply for Allocation</h3>
-                    <p id="proc1-desc">Submit investment request with minimum $100k capital</p>
+            <div class="operator-content" style="direction: rtl;">
+                <div class="operator-photo" style="direction: ltr;">
+                    <img src="operator-photo-silhouette.png" alt="Ravil Crypto - Founder" class="operator-photo-img">
                 </div>
-                <div class="process-card">
-                    <div class="process-num">2</div>
-                    <h3 id="proc2-title">Strategy Selection</h3>
-                    <p id="proc2-desc">Choose between Stable, Balanced, or Aggressive approach</p>
-                </div>
-                <div class="process-card">
-                    <div class="process-num">3</div>
-                    <h3 id="proc3-title">Capital Deployment</h3>
-                    <p id="proc3-desc">Funds deployed across DeFi protocols within 24 hours</p>
-                </div>
-                <div class="process-card">
-                    <div class="process-num">4</div>
-                    <h3 id="proc4-title">Ongoing Monitoring</h3>
-                    <p id="proc4-desc">Real-time dashboard and monthly performance reports</p>
+                
+                <div class="operator-text" style="direction: ltr;">
+                    <h3 data-en="Why I Built SYCapital" data-ru="Почему появился SYCapital">
+                        Why I Built SYCapital
+                    </h3>
+                    
+                    <p data-en="After years of managing institutional portfolios, I realized the crypto industry lacked what traditional finance takes for granted: transparent, consistent, rules-based income." data-ru="После многих лет управления институциональными портфелями я понял: криптоиндустрии не хватает главного — прозрачного, стабильного и системного дохода.">
+                        After years of managing institutional portfolios, I realized the crypto industry lacked what traditional finance takes for granted: transparent, consistent, rules-based income.
+                    </p>
+                    
+                    <p data-en="Everyone wanted yield, but nobody was doing it properly." data-ru="Все хотели доходность, но почти никто не выстраивал её профессионально.">
+                        Everyone wanted yield, but nobody was doing it properly.
+                    </p>
+                    
+                    <ul>
+                        <li data-en="Most funds: leverage loops, hidden positions, opaque structures." data-ru="Большинство фондов: циклы рычага, скрытые позиции, непрозрачные структуры.">
+                            Most funds: leverage loops, hidden positions, opaque structures.
+                        </li>
+                        <li data-en="SYCapital: real assets, real yields, real transparency." data-ru="SYCapital: реальные активы, реальные доходы, реальная прозрачность.">
+                            SYCapital: real assets, real yields, real transparency.
+                        </li>
+                        <li data-en="Your capital stays yours. You earn 20–40% annually. You see every move." data-ru="Ваш капитал остается под вашим контролем. Доходность — 20–40% в год. Все действия прозрачны.">
+                            Your capital stays yours. You earn 20–40% annually. You see every move.
+                        </li>
+                        <li data-en="Selective onboarding maintains strategy edge. We don't scale recklessly." data-ru="Выборочное привлечение клиентов сохраняет преимущество стратегии. Мы не масштабируемся безрассудно.">
+                            Selective onboarding maintains strategy edge. We don't scale recklessly.
+                        </li>
+                    </ul>
+                    
+                    <div class="operator-highlight">
+                    <p data-en="🎯 If you're looking for another yield farm or leverage play, we're not for you. If you want real infrastructure income managed by someone who puts their own money where their mouth is, let's talk." data-ru="🎯 Если вы ищете очередную yield-ферму или игру с плечом — мы не для вас. Если вам нужен реальный инфраструктурный доход под управлением человека, который сам работает тем же капиталом, давайте обсудим.">
+                            🎯 If you're looking for another yield farm or leverage play, we're not for you. If you want real infrastructure income managed by someone who puts their own money where their mouth is, let's talk.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section id="faq">
-        <div class="container" style="max-width: 800px;">
-            <h2 id="faq-title">Frequently Asked Questions</h2>
-            <p class="subtitle" id="faq-subtitle">Transparency and clarity on all aspects of capital management</p>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span id="faq-q1">Where are funds stored?</span>
-                    <span>+</span>
-                </div>
-                <div class="faq-answer" id="faq-a1">All capital is held in decentralized protocols with verified smart contracts. We use custodial solutions with institutional-grade security audits.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span id="faq-q2">Is there a custodian?</span>
-                    <span>+</span>
-                </div>
-                <div class="faq-answer" id="faq-a2">Yes. We work with regulated custodians that hold cryptographic keys separately from operational funds, ensuring institutional security standards.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span id="faq-q3">Can I exit early?</span>
-                    <span>+</span>
-                </div>
-                <div class="faq-answer" id="faq-a3">Yes. We allow quarterly redemptions with 30 days notice. Early exit fees may apply depending on market conditions.</div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span id="faq-q4">What are the main risks?</span>
-                    <span>+</span>
-                </div>
-                <div class="faq-answer" id="faq-a4">Smart contract risk, protocol risk, market volatility, and liquidation risk. We mitigate through diversification, low LTV ratios, and continuous monitoring.</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section id="cta">
+    <!-- ===== CTA ===== -->
+    <section>
         <div class="container">
-            <div style="text-align: center; margin-bottom: 48px;">
-                <h2 id="cta-title">Ready to Allocate Capital?</h2>
-                <p class="subtitle" id="cta-subtitle">Join institutional investors generating consistent yield through systematic DeFi strategies</p>
-            </div>
-            <div class="form-box">
-                <form onsubmit="handleSubmit(event)">
-                    <div class="form-group">
-                        <label class="form-label" id="form-email-label">Email</label>
-                        <input type="email" class="form-input" placeholder="your@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" id="form-amount-label">Allocation Size</label>
-                        <input type="text" class="form-input" placeholder="$100,000+" required>
-                    </div>
-                    <button type="submit" class="btn-primary" style="width: 100%; padding: 16px; font-size: 16px;" id="form-submit">Submit Request</button>
-                </form>
+            <div class="cta-section">
+                <h2 data-en="Ready to Generate Institutional-Grade Income?" data-ru="Готовы к доходу институционального уровня?">Ready to Generate Institutional-Grade Income?</h2>
+                <p data-en="We selectively onboard capital to maintain strategy efficiency and performance. Limited allocation capacity available." data-ru="Мы подключаем капитал выборочно, чтобы сохранять эффективность стратегии и качество результата. Емкость ограничена.">
+                    We selectively onboard capital to maintain strategy efficiency and performance. Limited allocation capacity available.
+                </p>
+                
+                <div class="buttons">
+                    <a href="https://t.me/ravilinvest" target="_blank" rel="noopener" class="btn-primary" data-en="Request Allocation" data-ru="Запросить размещение">Request Allocation</a>
+                    <a href="https://t.me/ravilinvest" target="_blank" rel="noopener" class="btn-secondary" data-en="Book a consultation" data-ru="Записаться на консультацию">Book a consultation</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
-                        <div class="logo-box">SI</div>
-                        <span id="footer-company">Suleymanov Investments</span>
-                    </div>
-                    <p id="footer-tagline">Institutional DeFi Asset Management</p>
-                </div>
-                <div class="footer-section">
-                    <h4 id="footer-links-title">Quick Links</h4>
+                    <h4 data-en="Company" data-ru="Компания">Company</h4>
                     <ul>
-                        <li><a href="#home" id="footer-home">Home</a></li>
-                        <li><a href="#strategy" id="footer-strategy">Strategy</a></li>
-                        <li><a href="#performance" id="footer-performance">Performance</a></li>
-                        <li><a href="#faq" id="footer-faq">FAQ</a></li>
+                        <li><a href="#hero" data-en="About" data-ru="О компании">About</a></li>
+                        <li><a href="#how" data-en="How It Works" data-ru="Как это работает">How It Works</a></li>
+                        <li><a href="#risk" data-en="Risk" data-ru="Риск">Risk</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-section">
-                    <h4 id="footer-contact-title">Contact</h4>
+                    <h4 data-en="Resources" data-ru="Материалы">Resources</h4>
                     <ul>
-                        <li><a href="mailto:hello@suleymanov.investments" id="footer-email">hello@suleymanov.investments</a></li>
-                        <li><a href="#" id="footer-telegram">@SuleymanovInvest</a></li>
+                        <li><a href="#data" data-en="Live portfolio data" data-ru="Данные по портфелю">Live portfolio data</a></li>
+                        <li><a href="https://docs.google.com/spreadsheets/d/1nwMDeiA6Z7cN0FJwQ1WMBH8bG74VMObvZCmMZAg5Kjg/edit?gid=0#gid=0" target="_blank" rel="noopener" data-en="Public spreadsheet" data-ru="Публичная таблица">Public spreadsheet</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-section">
-                    <h4 id="footer-legal-title">Legal</h4>
+                    <h4 data-en="Contact" data-ru="Контакты">Contact</h4>
                     <ul>
-                        <li><a href="#" id="footer-disclaimer">Risk Disclosure</a></li>
-                        <li><a href="#" id="footer-terms">Terms of Service</a></li>
-                        <li><a href="#" id="footer-privacy">Privacy Policy</a></li>
+                        <li><a href="mailto:sycapital@gmail.com" data-en="Email" data-ru="Почта">Email</a></li>
+                        <li><a href="https://t.me/ravilinvest" target="_blank" rel="noopener" data-en="Telegram" data-ru="Телеграм">Telegram</a></li>
+                        <li><a href="https://www.linkedin.com/in/ravil-suleymanov-948299236" target="_blank" rel="noopener" data-en="LinkedIn" data-ru="LinkedIn">LinkedIn</a></li>
+                        <li><a href="https://www.youtube.com/@RavilCrypto" target="_blank" rel="noopener" data-en="YouTube — Ravil Crypto" data-ru="YouTube — Ravil Crypto">YouTube — Ravil Crypto</a></li>
                     </ul>
                 </div>
-            </div>
-            
-            <div class="footer-disclaimer" id="footer-risk-text">
-                This website is for informational purposes only. It does not constitute investment advice. Cryptocurrency and DeFi investments carry significant risk including potential loss of principal. Past performance does not guarantee future results. Please conduct your own due diligence.
             </div>
             
             <div class="footer-bottom">
-                <p id="footer-copyright">© 2026 Suleymanov Investments. All rights reserved.</p>
-                <div>
-                    <a href="#" style="margin-right: 16px;">Twitter</a>
-                    <a href="#" style="margin-right: 16px;">LinkedIn</a>
-                    <a href="#">Discord</a>
-                </div>
+                <p data-en="© 2026 Structured Yield Capital. All rights reserved." data-ru="© 2026 Structured Yield Capital. Все права защищены.">© 2026 Structured Yield Capital. All rights reserved.</p>
+                <p data-en="Not investment advice. Do your own due diligence." data-ru="Не является инвестиционной рекомендацией. Оцените риски самостоятельно.">Not investment advice. Do your own due diligence.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Translations
-        const translations = {
-            en: {
-                'nav-home': 'Home',
-                'nav-strategy': 'Strategy',
-                'nav-performance': 'Performance',
-                'nav-about': 'About',
-                'nav-request': 'Request Allocation',
-                'hero-title': 'Institutional DeFi Yield Strategies',
-                'hero-subtitle': 'Systematic capital allocation across DeFi protocols to generate stable yield and long-term crypto exposure',
-                'metric1-label': 'Target Return',
-                'metric2-label': 'Strategy Type',
-                'metric3-label': 'Risk Profile',
-                'metric4-label': 'Capital Allocation',
-                'stat1-label': 'Capital Deployed',
-                'stat2-label': 'Protocols Integrated',
-                'stat3-label': 'Track Record',
-                'strategy-title': 'Investment Strategies',
-                'strategy-subtitle': 'Three institutional-grade approaches to capital allocation',
-                'strat1-title': 'Stable Yield',
-                'strat1-desc': 'Low volatility, consistent income',
-                'strat1-apy-label': 'Target Return',
-                'strat1-risk-label': 'Risk Level',
-                'strat2-title': 'Balanced BTC + DeFi',
-                'strat2-desc': 'Optimal risk-return profile',
-                'strat2-apy-label': 'Target Return',
-                'strat2-risk-label': 'Risk Level',
-                'strat3-title': 'Aggressive BTC Growth',
-                'strat3-desc': 'Maximum exposure to upside',
-                'strat3-apy-label': 'Target Return',
-                'strat3-risk-label': 'Risk Level',
-                'perf-title': 'Performance Metrics',
-                'perf-subtitle': 'Consistent yield generation with risk-managed exposure',
-                'chart1-title': 'Yearly Returns (2016-2026)',
-                'chart2-title': 'Portfolio Value Growth',
-                'chart3-title': '2025 Monthly Performance',
-                'avg-label': 'Average Monthly Return',
-                'best-year-label': 'Best Year',
-                'cagr-label': '10-Year CAGR',
-                'total-label': 'Total Return',
-                'sharpe-label': 'Sharpe Ratio',
-                'risk-title': 'Risk-First Approach',
-                'risk-subtitle': 'Capital preservation through systematic risk management',
-                'risk1-title': 'LTV Control',
-                'risk1-desc': 'Max Loan-to-Value ratio maintained at 30–40%',
-                'risk2-title': 'Protocol Diversification',
-                'risk2-desc': 'Exposure spread across multiple battle-tested DeFi protocols',
-                'risk3-title': 'No Leverage Loops',
-                'risk3-desc': 'Avoid recursive borrowing that amplifies cascading risk',
-                'risk4-title': 'Liquidity Management',
-                'risk4-desc': 'Zero exposure to illiquid tokens or experimental protocols',
-                'process-title': 'How It Works',
-                'process-subtitle': 'Simple process from allocation to returns',
-                'proc1-title': 'Apply for Allocation',
-                'proc1-desc': 'Submit investment request with minimum $100k capital',
-                'proc2-title': 'Strategy Selection',
-                'proc2-desc': 'Choose between Stable, Balanced, or Aggressive approach',
-                'proc3-title': 'Capital Deployment',
-                'proc3-desc': 'Funds deployed across DeFi protocols within 24 hours',
-                'proc4-title': 'Ongoing Monitoring',
-                'proc4-desc': 'Real-time dashboard and monthly performance reports',
-                'faq-title': 'Frequently Asked Questions',
-                'faq-subtitle': 'Transparency and clarity on all aspects of capital management',
-                'faq-q1': 'Where are funds stored?',
-                'faq-a1': 'All capital is held in decentralized protocols with verified smart contracts. We use custodial solutions with institutional-grade security audits.',
-                'faq-q2': 'Is there a custodian?',
-                'faq-a2': 'Yes. We work with regulated custodians that hold cryptographic keys separately from operational funds, ensuring institutional security standards.',
-                'faq-q3': 'Can I exit early?',
-                'faq-a3': 'Yes. We allow quarterly redemptions with 30 days notice. Early exit fees may apply depending on market conditions.',
-                'faq-q4': 'What are the main risks?',
-                'faq-a4': 'Smart contract risk, protocol risk, market volatility, and liquidation risk. We mitigate through diversification, low LTV ratios, and continuous monitoring.',
-                'cta-title': 'Ready to Allocate Capital?',
-                'cta-subtitle': 'Join institutional investors generating consistent yield through systematic DeFi strategies',
-                'form-email-label': 'Email',
-                'form-amount-label': 'Allocation Size',
-                'form-submit': 'Submit Request',
-                'footer-company': 'Suleymanov Investments',
-                'footer-tagline': 'Institutional DeFi Asset Management',
-                'footer-links-title': 'Quick Links',
-                'footer-home': 'Home',
-                'footer-strategy': 'Strategy',
-                'footer-performance': 'Performance',
-                'footer-faq': 'FAQ',
-                'footer-contact-title': 'Contact',
-                'footer-email': 'hello@suleymanov.investments',
-                'footer-telegram': '@SuleymanovInvest',
-                'footer-legal-title': 'Legal',
-                'footer-disclaimer': 'Risk Disclosure',
-                'footer-terms': 'Terms of Service',
-                'footer-privacy': 'Privacy Policy',
-                'footer-risk-text': 'This website is for informational purposes only. It does not constitute investment advice. Cryptocurrency and DeFi investments carry significant risk including potential loss of principal. Past performance does not guarantee future results. Please conduct your own due diligence.',
-                'footer-copyright': '© 2026 Suleymanov Investments. All rights reserved.',
-            },
-            ru: {
-                'nav-home': 'Главная',
-                'nav-strategy': 'Стратегия',
-                'nav-performance': 'Доходность',
-                'nav-about': 'О нас',
-                'nav-request': 'Запросить размещение',
-                'hero-title': 'Инвестиционные стратегии DeFi',
-                'hero-subtitle': 'Систематическое размещение капитала в протоколах DeFi для стабильного дохода и долгосрочной экспозиции',
-                'metric1-label': 'Целевая доходность',
-                'metric2-label': 'Тип стратегии',
-                'metric3-label': 'Профиль риска',
-                'metric4-label': 'Размещение капитала',
-                'stat1-label': 'Развёрнуто капитала',
-                'stat2-label': 'Протоколов интегрировано',
-                'stat3-label': 'История результатов',
-                'strategy-title': 'Инвестиционные стратегии',
-                'strategy-subtitle': 'Три институциональных подхода к размещению капитала',
-                'strat1-title': 'Стабильный доход',
-                'strat1-desc': 'Низкая волатильность, постоянный доход',
-                'strat1-apy-label': 'Целевая доходность',
-                'strat1-risk-label': 'Уровень риска',
-                'strat2-title': 'Сбалансированная BTC + DeFi',
-                'strat2-desc': 'Оптимальное соотношение риск-доход',
-                'strat2-apy-label': 'Целевая доходность',
-                'strat2-risk-label': 'Уровень риска',
-                'strat3-title': 'Агрессивный рост BTC',
-                'strat3-desc': 'Максимальная экспозиция росту',
-                'strat3-apy-label': 'Целевая доходность',
-                'strat3-risk-label': 'Уровень риска',
-                'perf-title': 'Результаты работы',
-                'perf-subtitle': 'Стабильная генерация дохода с управлением рисками',
-                'chart1-title': 'Годовая доходность (2016-2026)',
-                'chart2-title': 'Рост стоимости портфеля',
-                'chart3-title': 'Доходность по месяцам 2025',
-                'avg-label': 'Средняя месячная доходность',
-                'best-year-label': 'Лучший год',
-                'cagr-label': 'CAGR 10 лет',
-                'total-label': 'Общий доход',
-                'sharpe-label': 'Sharpe Ratio',
-                'risk-title': 'Управление рисками',
-                'risk-subtitle': 'Сохранение капитала через систематическое управление',
-                'risk1-title': 'Контроль LTV',
-                'risk1-desc': 'Коэффициент Loan-to-Value поддерживается на 30–40%',
-                'risk2-title': 'Диверсификация протоколов',
-                'risk2-desc': 'Распределение экспозиции между проверенными протоколами',
-                'risk3-title': 'Без рекурсивного заимствования',
-                'risk3-desc': 'Избегаем каскадных рисков от цепочек заимствований',
-                'risk4-title': 'Управление ликвидностью',
-                'risk4-desc': 'Нулевая экспозиция на неликвидные токены',
-                'process-title': 'Как это работает',
-                'process-subtitle': 'Простой процесс от размещения до доходов',
-                'proc1-title': 'Запрос размещения',
-                'proc1-desc': 'Отправьте заявку с минимум $100,000',
-                'proc2-title': 'Выбор стратегии',
-                'proc2-desc': 'Выберите между Стабильной, Сбалансированной или Агрессивной',
-                'proc3-title': 'Размещение капитала',
-                'proc3-desc': 'Фонды размещаются в протоколы DeFi в течение 24 часов',
-                'proc4-title': 'Постоянный мониторинг',
-                'proc4-desc': 'Кабинет в реальном времени и ежемесячные отчёты',
-                'faq-title': 'Часто задаваемые вопросы',
-                'faq-subtitle': 'Прозрачность и ясность во всех аспектах управления',
-                'faq-q1': 'Где хранятся средства?',
-                'faq-a1': 'Весь капитал находится в децентрализованных протоколах с проверенными смарт-контрактами. Мы используем кастодиальные решения с аудитом безопасности.',
-                'faq-q2': 'Есть ли кастодиан?',
-                'faq-a2': 'Да. Мы работаем с регулируемыми кастодианами, которые хранят ключи отдельно от операционных фондов.',
-                'faq-q3': 'Я могу выйти раньше?',
-                'faq-a3': 'Да. Мы допускаем квартальные выводы с уведомлением на 30 дней. Может применяться комиссия за ранний выход.',
-                'faq-q4': 'Каковы основные риски?',
-                'faq-a4': 'Риск смарт-контракта, риск протокола, волатильность рынка, риск ликвидации. Мы снижаем через диверсификацию и мониторинг.',
-                'cta-title': 'Готовы разместить капитал?',
-                'cta-subtitle': 'Присоединитесь к институциональным инвесторам, генерирующим доход через стратегии DeFi',
-                'form-email-label': 'Электронная почта',
-                'form-amount-label': 'Размер размещения',
-                'form-submit': 'Отправить запрос',
-                'footer-company': 'Suleymanov Investments',
-                'footer-tagline': 'Управление инвестициями в DeFi',
-                'footer-links-title': 'Быстрые ссылки',
-                'footer-home': 'Главная',
-                'footer-strategy': 'Стратегия',
-                'footer-performance': 'Доходность',
-                'footer-faq': 'Вопросы',
-                'footer-contact-title': 'Контакты',
-                'footer-email': 'hello@suleymanov.investments',
-                'footer-telegram': '@SuleymanovInvest',
-                'footer-legal-title': 'Юридическое',
-                'footer-disclaimer': 'Раскрытие рисков',
-                'footer-terms': 'Условия использования',
-                'footer-privacy': 'Политика конфиденциальности',
-                'footer-risk-text': 'Этот сайт предназначен только для информационных целей. Это не является инвестиционным советом. Инвестиции в криптовалюты и DeFi связаны со значительными рисками.',
-                'footer-copyright': '© 2026 Suleymanov Investments. Все права защищены.',
-            }
-        };
+        // ===== CONFIG: Sheets must be "Anyone with the link — Viewer" for fetch from the website =====
+        const PRIVATE_SHEET_ID = '136wJuZhijDmcZElsMayoNE4Vnw6ACwgjg1yada73YYo';
+        /** Tab "Monthly_Yield" in SYCapital_Data — must match URL #gid=… */
+        const MONTHLY_YIELD_GID = '1780572284';
+        const PUBLIC_SHEET_ID = '1nwMDeiA6Z7cN0FJwQ1WMBH8bG74VMObvZCmMZAg5Kjg';
+        /** SY Capital Public Data — единственный лист (первая вкладка = gid 0). Если вкладка не первая, подставь gid из URL #gid=… */
+        const PUBLIC_SHEET_GID = '0';
+        const MONTHLY_YIELD_GVIZ = 'https://docs.google.com/spreadsheets/d/' + PRIVATE_SHEET_ID + '/gviz/tq?tqx=out:json&gid=' + MONTHLY_YIELD_GID;
+        const PUBLIC_GVIZ_JSON = 'https://docs.google.com/spreadsheets/d/' + PUBLIC_SHEET_ID + '/gviz/tq?tqx=out:json&gid=' + PUBLIC_SHEET_GID;
+        const MONTHLY_YIELD_URLS = [
+            'https://docs.google.com/spreadsheets/d/' + PRIVATE_SHEET_ID + '/export?format=csv&gid=' + MONTHLY_YIELD_GID,
+            'https://docs.google.com/spreadsheets/d/' + PRIVATE_SHEET_ID + '/gviz/tq?tqx=out:csv&gid=' + MONTHLY_YIELD_GID,
+            'https://docs.google.com/spreadsheets/d/' + PRIVATE_SHEET_ID + '/export?format=csv&sheet=Monthly_Yield',
+            'https://docs.google.com/spreadsheets/d/' + PRIVATE_SHEET_ID + '/gviz/tq?tqx=out:csv&sheet=Monthly_Yield'
+        ];
+        const PUBLIC_CSV_URLS = [
+            'https://docs.google.com/spreadsheets/d/' + PUBLIC_SHEET_ID + '/export?format=csv&gid=' + PUBLIC_SHEET_GID,
+            'https://docs.google.com/spreadsheets/d/' + PUBLIC_SHEET_ID + '/gviz/tq?tqx=out:csv&gid=' + PUBLIC_SHEET_GID
+        ];
 
+        // ===== MULTI-LANGUAGE =====
         let currentLang = 'en';
+        var lastMonthlyParsed = null;
 
-        function setLang(lang) {
+        function switchLang(lang) {
             currentLang = lang;
-            document.getElementById('lang-en').classList.toggle('active');
-            document.getElementById('lang-ru').classList.toggle('active');
-            
-            Object.keys(translations[lang]).forEach(id => {
-                const elem = document.getElementById(id);
-                if (elem) elem.textContent = translations[lang][id];
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-en][data-ru]').forEach(function (el) {
+                var t = el.getAttribute('data-' + lang);
+                if (t) el.textContent = t;
+            });
+            document.querySelectorAll('.lang-btn').forEach(function (btn) {
+                btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+            });
+            if (lastMonthlyParsed) {
+                renderMonthlyCharts(lastMonthlyParsed);
+            }
+            renderBandChart();
+        }
+
+        function parseCsv(text) {
+            var rows = [];
+            var row = [];
+            var cur = '';
+            var i = 0;
+            var inQ = false;
+            while (i < text.length) {
+                var c = text[i];
+                if (inQ) {
+                    if (c === '"') {
+                        if (text[i + 1] === '"') { cur += '"'; i += 2; continue; }
+                        inQ = false; i++; continue;
+                    }
+                    cur += c; i++; continue;
+                }
+                if (c === '"') { inQ = true; i++; continue; }
+                if (c === ',') { row.push(cur); cur = ''; i++; continue; }
+                if (c === '\r') { i++; continue; }
+                if (c === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; i++; continue; }
+                cur += c; i++;
+            }
+            if (cur.length || row.length) { row.push(cur); rows.push(row); }
+            return rows;
+        }
+
+        function fetchCsv(url) {
+            return fetch(url, { mode: 'cors', credentials: 'omit', cache: 'no-store' }).then(function (r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.text();
             });
         }
 
-        function toggleFAQ(element) {
-            const answer = element.nextElementSibling;
-            answer.classList.toggle('active');
-            element.classList.toggle('active');
-            element.querySelector('span:last-child').textContent = answer.classList.contains('active') ? '−' : '+';
+        function fetchFirstOk(urls) {
+            return urls.reduce(function (chain, url) {
+                return chain.catch(function () { return fetchCsv(url); });
+            }, Promise.reject());
         }
 
-        function handleSubmit(e) {
-            e.preventDefault();
-            alert(currentLang === 'en' ? 'Request submitted!' : 'Запрос отправлен!');
+        /**
+         * Google gviz JSON loads as <script> — no CORS (unlike fetch CSV).
+         * URL: .../gviz/tq?tqx=out:json&gid=...
+         */
+        function loadGvizJson(url) {
+            return new Promise(function (resolve, reject) {
+                var finished = false;
+                var to = setTimeout(function () {
+                    if (!finished) {
+                        finished = true;
+                        reject(new Error('timeout'));
+                    }
+                }, 20000);
+
+                function finish(err, data) {
+                    if (finished) return;
+                    finished = true;
+                    clearTimeout(to);
+                    try {
+                        if (scriptEl && scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
+                    } catch (e) { /* ignore */ }
+                    if (err) reject(err);
+                    else resolve(data);
+                }
+
+                var scriptEl = document.createElement('script');
+                scriptEl.async = true;
+                scriptEl.onerror = function () {
+                    finish(new Error('script blocked or network error'));
+                };
+                scriptEl.src = url;
+
+                window.google = window.google || {};
+                window.google.visualization = window.google.visualization || {};
+                window.google.visualization.Query = {
+                    setResponse: function (resp) {
+                        if (!resp || resp.status === 'error') {
+                            var em = resp && resp.errors && resp.errors[0] ? resp.errors[0].detailed_message : 'gviz error';
+                            finish(new Error(em));
+                            return;
+                        }
+                        finish(null, resp);
+                    }
+                };
+
+                document.head.appendChild(scriptEl);
+            });
         }
 
-        // Charts
-        const ctx1 = document.getElementById('yearlyChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
-                datasets: [{
-                    label: 'Return %',
-                    data: [8, 42, -15, 28, 65, 45, -8, 52, 38, 32, 27],
-                    backgroundColor: '#F2994A',
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { ticks: { color: 'rgba(255,255,255,0.5)' } }, x: { ticks: { color: 'rgba(255,255,255,0.5)' } } }
-            }
-        });
+        function gvizToRows(resp) {
+            if (!resp || !resp.table || !resp.table.rows) return [];
+            var cols = resp.table.cols.map(function (c) { return (c.label || '').trim(); });
+            var out = [cols];
+            resp.table.rows.forEach(function (row) {
+                var r = [];
+                var cells = row.c || [];
+                for (var i = 0; i < cols.length; i++) {
+                    var cell = cells[i];
+                    if (!cell) {
+                        r.push('');
+                        continue;
+                    }
+                    var lab = String(cols[i] || '').toLowerCase();
+                    var v = cell.v;
+                    var f = cell.f;
+                    if (lab === 'month' && f) {
+                        r.push(String(f).trim());
+                        continue;
+                    }
+                    if (lab === 'month' && typeof v === 'string' && v.indexOf('Date(') === 0) {
+                        var m = v.match(/Date\((\d+),(\d+),(\d+)\)/);
+                        if (m) {
+                            var mo = parseInt(m[2], 10) + 1;
+                            r.push(m[1] + '-' + (mo < 10 ? '0' : '') + mo);
+                            continue;
+                        }
+                    }
+                    if ((lab.indexOf('date') >= 0 || lab.indexOf('open') >= 0) && lab.indexOf('month') < 0) {
+                        if (typeof v === 'string' && v.indexOf('Date(') === 0) {
+                            var dm = v.match(/Date\((\d+),(\d+),(\d+)\)/);
+                            if (dm) {
+                                var y = dm[1];
+                                var mo = parseInt(dm[2], 10) + 1;
+                                var di = parseInt(dm[3], 10);
+                                r.push(y + '-' + (mo < 10 ? '0' : '') + mo + '-' + (di < 10 ? '0' : '') + di);
+                                continue;
+                            }
+                        }
+                        if (f) {
+                            r.push(String(f).trim());
+                            continue;
+                        }
+                    }
+                    if (typeof v === 'number' && !isNaN(v)) {
+                        r.push(v);
+                    } else if (v !== null && v !== undefined && typeof v !== 'object') {
+                        r.push(v);
+                    } else if (f !== undefined && f !== null) {
+                        r.push(String(f));
+                    } else {
+                        r.push('');
+                    }
+                }
+                out.push(r);
+            });
+            return out;
+        }
 
-        const ctx2 = document.getElementById('growthChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                datasets: [{
-                    label: 'Portfolio Value',
-                    data: [100, 142, 121, 155, 256, 371, 341, 518, 716, 945],
-                    borderColor: '#2F80ED',
-                    backgroundColor: 'rgba(47, 128, 237, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    borderWidth: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { ticks: { color: 'rgba(255,255,255,0.5)' } }, x: { ticks: { color: 'rgba(255,255,255,0.5)' } } }
-            }
-        });
+        function destroyChartIfAny(canvas) {
+            if (!canvas) return;
+            var ch = typeof Chart !== 'undefined' && Chart.getChart ? Chart.getChart(canvas) : null;
+            if (ch) ch.destroy();
+        }
 
-        const ctx3 = document.getElementById('monthlyChart').getContext('2d');
-        new Chart(ctx3, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Monthly Return %',
-                    data: [4.2, 3.8, 5.1, 4.6, 5.8, 6.2, 4.9, 3.5, 5.3, 6.1, 4.7, 5.9],
-                    borderColor: '#F2994A',
-                    backgroundColor: 'rgba(242, 153, 74, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    borderWidth: 3,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#F2994A'
-                }]
-            },
-            options: {
+        /** Google/Excel EU numbers: 0,42 or 99.350,9064 */
+        function parseLocaleNumber(s) {
+            if (s == null || s === '') return NaN;
+            var t = String(s).trim().replace(/\s/g, '');
+            if (t === '' || t === '-') return NaN;
+            if (t.indexOf('.') >= 0 && t.indexOf(',') >= 0) {
+                if (t.lastIndexOf(',') > t.lastIndexOf('.')) {
+                    t = t.replace(/\./g, '').replace(',', '.');
+                } else {
+                    t = t.replace(/,/g, '');
+                }
+            } else if (t.indexOf(',') >= 0 && t.indexOf('.') < 0) {
+                t = t.replace(',', '.');
+            }
+            return parseFloat(t);
+        }
+
+        /**
+         * Monthly_Yield: по месяцам показываем годовую APY (как в таблице), без перевода в «месячную» доходность.
+         * Колонка «APY %» или число >1.5 — уже в процентах годовых; иначе — доля (0.35 = 35% годовых).
+         */
+        function getLast12MonthlyYield(rows) {
+            if (!rows || rows.length < 2) return { labels: [], apyAnnualPct: [] };
+            var hdr = rows[0].map(function (h) { return String(h).trim().toLowerCase(); });
+            var iMonth = hdr.indexOf('month');
+            if (iMonth < 0) iMonth = 0;
+            var iApyPct = -1;
+            var iApy = -1;
+            for (var j = 0; j < hdr.length; j++) {
+                var hj = hdr[j].replace(/\s/g, '');
+                if (hj === 'apy%' || (hdr[j].indexOf('apy') >= 0 && hdr[j].indexOf('%') >= 0)) {
+                    iApyPct = j;
+                    break;
+                }
+            }
+            for (j = 0; j < hdr.length; j++) {
+                if (hdr[j] === 'apy' && hdr[j].indexOf('%') < 0) {
+                    iApy = j;
+                    break;
+                }
+            }
+            if (iApy < 0) {
+                for (j = 0; j < hdr.length; j++) {
+                    if (hdr[j].indexOf('apy') === 0 && hdr[j].indexOf('%') < 0) { iApy = j; break; }
+                }
+            }
+            if (iApy < 0) iApy = Math.min(3, hdr.length - 1);
+
+            var dataRows = rows.slice(1).filter(function (r) { return r[iMonth] && String(r[iMonth]).trim(); });
+            dataRows.sort(function (a, b) { return String(a[iMonth]).localeCompare(String(b[iMonth])); });
+            var last12 = dataRows.slice(-12);
+            var labels = [];
+            var apyAnnualPct = [];
+            last12.forEach(function (r) {
+                labels.push(String(r[iMonth]).trim());
+                var raw;
+                if (iApyPct >= 0) {
+                    raw = parseLocaleNumber(r[iApyPct]);
+                } else {
+                    raw = parseLocaleNumber(r[iApy]);
+                }
+                if (isNaN(raw)) raw = 0;
+                var pct = raw > 1.5 ? raw : raw * 100;
+                apyAnnualPct.push(pct);
+            });
+            return { labels: labels, apyAnnualPct: apyAnnualPct };
+        }
+
+        function chartCommonOptions() {
+            return {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { ticks: { color: 'rgba(255,255,255,0.5)' } }, x: { ticks: { color: 'rgba(255,255,255,0.5)' } } }
+                animation: false,
+                plugins: {
+                    legend: { display: true, labels: { color: 'rgba(255,255,255,0.65)', boxWidth: 10 } }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.04)' },
+                        ticks: { color: 'rgba(255,255,255,0.55)', maxTicksLimit: 6 }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: 'rgba(255,255,255,0.55)', maxRotation: 45, minRotation: 0 }
+                    }
+                }
+            };
+        }
+
+        /**
+         * Иллюстрация: тренд ~30% APR; коридор относительно тренда — в начале до ~−25% / +10% к входу,
+         * дальше сохраняется заметная ширина (не схлопывается к 100k по нижней границе).
+         */
+        function buildBandSeries() {
+            var months = 60;
+            var start = 100000;
+            var labels = [];
+            var upper = [];
+            var lower = [];
+            var center = [];
+            var trend = [];
+            var seed = 1337;
+            function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+            function xLabel(m) {
+                if (m === 0) return currentLang === 'ru' ? 'Старт' : 'Start';
+                if (m <= 24) {
+                    if (m % 2 === 0) return currentLang === 'ru' ? (m + ' мес') : (m + ' mo');
+                    return '';
+                }
+                if (m % 12 === 0) return currentLang === 'ru' ? ((m / 12) + ' г') : ((m / 12) + ' yr');
+                return '';
             }
+            for (var m = 0; m <= months; m++) {
+                labels.push(xLabel(m));
+                var T = start * Math.pow(1.3, m / 12);
+                trend.push(T);
+                var w = Math.exp(-m / 4);
+                var lowPct = 0.25 * w + 0.17 * (1 - w);
+                var highPct = 0.10 * w + 0.18 * (1 - w);
+                var L = T * (1 - lowPct);
+                var U = T * (1 + highPct);
+                lower.push(L);
+                upper.push(U);
+                var span = Math.max(U - L, 1);
+                var wave = 0.5 + 0.48 * Math.sin(m * 0.42) + 0.12 * Math.sin(m * 1.1);
+                var C = L + span * Math.min(1, Math.max(0, wave));
+                C += (rnd() - 0.5) * span * 0.06;
+                if (m === 0) {
+                    C = start;
+                } else if (m <= 6) {
+                    // First half-year: downtrend to ~90k with visible local waves, not a straight segment.
+                    var p = m / 6;
+                    var target6m = start * (1 - 0.10 * Math.pow(p, 0.86));
+                    var wiggle = start * ((0.012 * (1 - p)) * Math.sin(m * 2.25) - 0.006 * Math.cos(m * 1.35));
+                    var noise6m = start * (rnd() - 0.5) * 0.006;
+                    C = target6m + wiggle + noise6m;
+                }
+                C = Math.min(Math.max(C, L), U);
+                center.push(C);
+            }
+            return { labels: labels, upper: upper, lower: lower, center: center, trend: trend, start: start };
+        }
+
+        function updatePerformanceStats(apyAnnualPct) {
+            var volEl = document.getElementById('perfVolatilityValue');
+            var sharpeEl = document.getElementById('perfSharpeValue');
+            if (!volEl || !sharpeEl) return;
+            if (!apyAnnualPct || apyAnnualPct.length < 2) {
+                volEl.textContent = '--';
+                sharpeEl.textContent = '--';
+                return;
+            }
+
+            // Use combined position + carry logic:
+            // over 6 months: position can hit -25%, while carry adds about +15% => net downside ~-10%;
+            // upside proxy: +10% position +15% carry => +25% net.
+            var lower6m = -0.10;
+            var upper6m = 0.25;
+            var z95 = 1.645; // Approx. 5th–95th corridor under normal assumption
+            var sigma6m = (upper6m - lower6m) / (2 * z95);
+            var annualVol = sigma6m * Math.sqrt(2);
+
+            // Expected annual return from realized APY series (mean of last 12 annual APY points).
+            var expectedAnnualReturn = apyAnnualPct.reduce(function (s, v) {
+                return s + (parseFloat(v) || 0) / 100;
+            }, 0) / apyAnnualPct.length;
+
+            // Market benchmark instead of 0% risk-free:
+            // 50% ETH staking yield + 50% USD lending carry.
+            var benchmarkAnnual = 0.05;
+            var sharpe = annualVol > 0 ? (expectedAnnualReturn - benchmarkAnnual) / annualVol : 0;
+
+            volEl.textContent = (annualVol * 100).toFixed(1) + '%';
+            sharpeEl.textContent = sharpe.toFixed(2);
+        }
+
+        function renderMonthlyCharts(parsed) {
+            var labels = parsed.labels;
+            var apyAnnualPct = parsed.apyAnnualPct || [];
+            lastMonthlyParsed = parsed;
+            updatePerformanceStats(apyAnnualPct);
+            var heroLoad = document.getElementById('heroChartLoading');
+            var perfLoad = document.getElementById('perfBarLoading');
+            if (heroLoad) heroLoad.style.display = 'none';
+            if (perfLoad) perfLoad.style.display = 'none';
+
+            var heroOpts = chartCommonOptions();
+            if (heroOpts.scales && heroOpts.scales.y) {
+                heroOpts.scales.y.ticks.callback = function (v) { return v + '%'; };
+            }
+            heroOpts.plugins = heroOpts.plugins || {};
+            heroOpts.plugins.tooltip = {
+                callbacks: {
+                    label: function (ctx) {
+                        var v = ctx.parsed.y;
+                        return ctx.dataset.label + ': ' + (typeof v === 'number' ? v.toFixed(1) + '%' : v);
+                    }
+                }
+            };
+
+            var heroCtx = document.getElementById('heroChart');
+            destroyChartIfAny(heroCtx);
+            if (heroCtx && labels.length) {
+                new Chart(heroCtx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: currentLang === 'ru' ? 'Годовая доходность (%), по месяцам' : 'Annual yield (%), by month',
+                            data: apyAnnualPct,
+                            borderColor: '#C9A66B',
+                            backgroundColor: 'rgba(201, 166, 107, 0.08)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.2,
+                            pointRadius: 3,
+                            pointHoverRadius: 4
+                        }]
+                    },
+                    options: heroOpts
+                });
+            } else if (heroLoad) {
+                heroLoad.textContent = 'Chart did not load: in Google Sheets set sharing to “Anyone with the link” (Viewer) for the workbook that contains Monthly_Yield.';
+                heroLoad.style.display = 'block';
+            }
+
+            var barOpts = chartCommonOptions();
+            if (barOpts.scales && barOpts.scales.y) {
+                barOpts.scales.y.ticks.callback = function (v) { return v + '%'; };
+            }
+            barOpts.plugins = barOpts.plugins || {};
+            barOpts.plugins.tooltip = {
+                callbacks: {
+                    label: function (ctx) {
+                        var v = ctx.parsed.y;
+                        return ctx.dataset.label + ': ' + (typeof v === 'number' ? v.toFixed(1) + '%' : v);
+                    }
+                }
+            };
+
+            var barCtx = document.getElementById('monthlyYieldChart');
+            destroyChartIfAny(barCtx);
+            if (barCtx && labels.length) {
+                new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: currentLang === 'ru' ? 'Годовая доходность (%), по месяцам' : 'Annual yield (%), by month',
+                            data: apyAnnualPct,
+                            backgroundColor: 'rgba(201, 166, 107, 0.45)',
+                            borderColor: 'rgba(201, 166, 107, 0.9)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: barOpts
+                });
+            } else if (perfLoad) {
+                perfLoad.textContent = 'Same data source as hero — check spreadsheet sharing (Viewer).';
+                perfLoad.style.display = 'block';
+            }
+        }
+
+        function renderBandChart() {
+            var ctx = document.getElementById('capitalBandChart');
+            if (!ctx) return;
+            destroyChartIfAny(ctx);
+            var S = buildBandSeries();
+            var allY = S.lower.concat(S.upper, S.center, S.trend);
+            var dataMin = Math.min.apply(null, allY);
+            var dataMax = Math.max.apply(null, allY);
+            var range = Math.max(dataMax - dataMin, S.start * 0.08);
+            var yMin = Math.min(dataMin - range * 0.28, S.start * 0.68);
+            var yMax = dataMax + range * 0.12;
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: S.labels,
+                    datasets: [
+                        {
+                            label: currentLang === 'ru' ? 'Верхняя граница' : 'Upper bound',
+                            data: S.upper,
+                            borderColor: 'rgba(255,255,255,0.14)',
+                            backgroundColor: 'transparent',
+                            borderWidth: 1,
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            order: 0
+                        },
+                        {
+                            label: currentLang === 'ru' ? 'Нижняя граница' : 'Lower bound',
+                            data: S.lower,
+                            borderColor: 'rgba(255,255,255,0.14)',
+                            backgroundColor: 'rgba(130, 150, 175, 0.2)',
+                            borderWidth: 1,
+                            pointRadius: 0,
+                            fill: '-1',
+                            tension: 0,
+                            order: 1
+                        },
+                        {
+                            label: currentLang === 'ru' ? 'Тренд (30% годовых, сложный %)' : 'Trend (30% APR compound)',
+                            data: S.trend,
+                            borderColor: 'rgba(255,255,255,0.22)',
+                            borderDash: [5, 5],
+                            borderWidth: 1,
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0.2,
+                            order: 2
+                        },
+                        {
+                            label: currentLang === 'ru' ? 'Стартовый капитал ($100k)' : 'Initial capital ($100k)',
+                            data: S.labels.map(function () { return S.start; }),
+                            borderColor: 'rgba(255,255,255,0.32)',
+                            borderDash: [4, 4],
+                            borderWidth: 1,
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            order: 3
+                        },
+                        {
+                            label: currentLang === 'ru' ? 'Капитал (волатильная траектория)' : 'Capital (volatile path)',
+                            data: S.center,
+                            borderColor: '#c4a574',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0.35,
+                            order: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: 'rgba(255,255,255,0.55)',
+                                boxWidth: 10,
+                                font: { size: 10 },
+                                filter: function (item) {
+                                    return String(item.text || '').indexOf('bound') < 0;
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (ctx) {
+                                    var v = ctx.parsed.y;
+                                    return ctx.dataset.label + ': $' + v.toLocaleString(undefined, { maximumFractionDigits: 0 });
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: yMin,
+                            max: yMax,
+                            grid: { color: 'rgba(255,255,255,0.04)' },
+                            ticks: {
+                                color: 'rgba(255,255,255,0.5)',
+                                maxTicksLimit: 8,
+                                callback: function (v) {
+                                    if (v >= 1000000) return (v / 1000000).toFixed(1) + 'M';
+                                    return (v / 1000).toFixed(0) + 'k';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255,255,255,0.03)' },
+                            ticks: {
+                                color: 'rgba(255,255,255,0.5)',
+                                autoSkip: true,
+                                maxTicksLimit: 16,
+                                maxRotation: 45,
+                                minRotation: 0,
+                                callback: function (val, idx) {
+                                    var lab = S.labels[idx];
+                                    return lab || '';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        /** Значение в листе: доля годовой APY (0.55) или уже проценты (55). */
+        function parseApyCell(s) {
+            if (s == null || s === '') return '';
+            var n = typeof s === 'number' ? s : parseLocaleNumber(String(s).replace(/%/g, ''));
+            if (isNaN(n)) return String(s);
+            var pct = n > 1.5 ? n : n * 100;
+            return pct.toFixed(1) + '%';
+        }
+
+        function parseRowDateForSort(val) {
+            if (val == null || val === '') return 0;
+            var t = String(val).trim();
+            if (t.indexOf('Date(') === 0) {
+                var m = t.match(/Date\((\d+),(\d+),(\d+)\)/);
+                if (m) return new Date(parseInt(m[1], 10), parseInt(m[2], 10), parseInt(m[3], 10)).getTime();
+            }
+            var d = Date.parse(t);
+            return isNaN(d) ? 0 : d;
+        }
+
+        function findHeaderCol(hdr, candidates) {
+            for (var c = 0; c < candidates.length; c++) {
+                var want = candidates[c].toLowerCase().replace(/\s+/g, ' ').trim();
+                for (var i = 0; i < hdr.length; i++) {
+                    var h = String(hdr[i] || '').toLowerCase().replace(/\s+/g, ' ').trim();
+                    if (h === want || h.replace(/_/g, ' ') === want) return i;
+                }
+            }
+            return -1;
+        }
+
+        function maskId(id) {
+            var s = String(id).replace(/\s/g, '');
+            if (s.length <= 4) return '#' + s;
+            return '#···' + s.slice(-4);
+        }
+
+        function dedupePublicSheet(rows) {
+            if (!rows || !rows[0]) return rows;
+            var h0 = String(rows[0][0] || '').trim().toLowerCase();
+            var h8 = rows[0][8] != null ? String(rows[0][8]).trim().toLowerCase() : '';
+            if (h8 && h8 === h0) {
+                return rows.map(function (r) { return r.slice(0, 8); });
+            }
+            return rows;
+        }
+
+        function renderPublicTable(rows) {
+            var tbody = document.getElementById('publicPositionsBody');
+            var load = document.getElementById('publicTableLoading');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            if (!rows || rows.length < 2) {
+                if (load) { load.textContent = 'Таблица не загрузилась — проверь, что файл открыт по ссылке для всех (Viewer).'; }
+                return;
+            }
+            rows = dedupePublicSheet(rows);
+            if (load) load.style.display = 'none';
+            var hdr = rows[0].map(function (h) { return String(h).trim().toLowerCase(); });
+            var iNft = findHeaderCol(hdr, ['position id', 'position_id', 'nft_id', 'nft id', 'id']);
+            var iOpen = findHeaderCol(hdr, ['open date', 'open_date', 'open']);
+            var iDays = findHeaderCol(hdr, ['duration', 'days']);
+            var iApy = findHeaderCol(hdr, ['apy %', 'apy%', 'apy']);
+            var iStatus = findHeaderCol(hdr, ['status']);
+            var iClose = findHeaderCol(hdr, ['close date', 'close_date']);
+            if (iNft < 0) iNft = 0;
+            if (iOpen < 0) iOpen = Math.min(1, hdr.length - 1);
+            if (iDays < 0) iDays = Math.min(2, hdr.length - 1);
+            if (iApy < 0) {
+                for (var hi = 0; hi < hdr.length; hi++) {
+                    if (hdr[hi].indexOf('apy') >= 0) { iApy = hi; break; }
+                }
+            }
+            if (iApy < 0) iApy = Math.min(3, hdr.length - 1);
+
+            var dataRows = rows.slice(1).filter(function (r) { return r[iNft] != null && String(r[iNft]).trim(); });
+            dataRows.sort(function (a, b) {
+                return parseRowDateForSort(b[iOpen]) - parseRowDateForSort(a[iOpen]);
+            });
+            var seven = dataRows.slice(0, 7);
+            if (seven.length === 0) {
+                if (load) {
+                    load.style.display = 'block';
+                    load.textContent = 'No data rows found after parsing CSV.';
+                }
+                return;
+            }
+            seven.forEach(function (r) {
+                var tr = document.createElement('tr');
+                var status = 'Active';
+                if (iStatus >= 0) {
+                    status = String(r[iStatus] || '').trim() || 'Active';
+                } else if (iClose >= 0) {
+                    var closeRaw = String(r[iClose] || '').toLowerCase();
+                    if (closeRaw && closeRaw.indexOf('active') < 0) status = 'Closed';
+                }
+                tr.innerHTML =
+                    '<td>' + maskId(r[iNft]) + '</td>' +
+                    '<td>' + String(r[iOpen] || '').trim() + '</td>' +
+                    '<td>' + String(r[iDays] || '').trim() + '</td>' +
+                    '<td class="yield">' + parseApyCell(r[iApy]) + '</td>' +
+                    '<td>' + status + '</td>';
+                tbody.appendChild(tr);
+            });
+        }
+
+        function loadMonthlyYieldData() {
+            return loadGvizJson(MONTHLY_YIELD_GVIZ)
+                .then(function (resp) {
+                    renderMonthlyCharts(getLast12MonthlyYield(gvizToRows(resp)));
+                })
+                .catch(function () {
+                    return fetchFirstOk(MONTHLY_YIELD_URLS).then(function (text) {
+                        renderMonthlyCharts(getLast12MonthlyYield(parseCsv(text)));
+                    });
+                });
+        }
+
+        function loadPublicPositionsData() {
+            return loadGvizJson(PUBLIC_GVIZ_JSON)
+                .then(function (resp) {
+                    renderPublicTable(gvizToRows(resp));
+                })
+                .catch(function () {
+                    return fetchFirstOk(PUBLIC_CSV_URLS).then(function (text) {
+                        renderPublicTable(parseCsv(text));
+                    });
+                });
+        }
+
+        loadMonthlyYieldData()
+            .catch(function (err) {
+                var heroLoad = document.getElementById('heroChartLoading');
+                var perfLoad = document.getElementById('perfBarLoading');
+                var msg = 'No chart data. Share SYCapital_Data (Anyone with the link → Viewer). ' + (err && err.message ? err.message : '');
+                if (heroLoad) { heroLoad.textContent = msg; heroLoad.style.display = 'block'; }
+                if (perfLoad) { perfLoad.textContent = msg; perfLoad.style.display = 'block'; }
+            })
+            .then(function () {
+                return loadPublicPositionsData();
+            })
+            .catch(function (err) {
+                var load = document.getElementById('publicTableLoading');
+                if (load) load.textContent = 'Table: load failed. Share public sheet (Viewer). ' + (err && err.message ? err.message : '');
+            });
+
+        renderBandChart();
+
+        document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+            anchor.addEventListener('click', function (e) {
+                var href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                var target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
         });
     </script>
 </body>
