@@ -426,6 +426,43 @@
             margin-bottom: 12px;
             line-height: 1.4;
         }
+        .capital-chart-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .capital-chart-head .chart-block-title {
+            margin-bottom: 0;
+        }
+        .capital-range-toggle {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .capital-range-btn {
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.62);
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s, color 0.2s;
+        }
+        .capital-range-btn:hover {
+            border-color: rgba(201, 166, 107, 0.35);
+            color: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.07);
+        }
+        .capital-range-btn.active {
+            border-color: rgba(201, 166, 107, 0.55);
+            background: rgba(201, 166, 107, 0.14);
+            color: #fff;
+        }
         .chart-disclaimer {
             font-size: 11px;
             color: rgba(255, 255, 255, 0.45);
@@ -1145,8 +1182,8 @@
                     
                     <div class="metrics-grid">
                         <div class="metric-card">
-                            <div class="metric-label" data-en="2025 Live Statistics (APY)" data-ru="Статистика APY за 2025 год">2025 Live Statistics (APY)</div>
-                            <div class="metric-value text-accent">34.4%</div>
+                            <div class="metric-label" data-en="Last 12 months live statistics (APY)" data-ru="Живая статистика APY за последние 12 мес.">Last 12 months live statistics (APY)</div>
+                            <div class="metric-value text-accent" id="heroLiveApyValue">—</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-label" data-en="Return Source" data-ru="Источник доходности">Return Source</div>
@@ -1164,7 +1201,7 @@
                             <div class="metric-value metric-text" data-en="Low" data-ru="Низкая">Low</div>
                         </div>
                     </div>
-                    <p class="metrics-footnote" data-en="Based on live positions (2025–2026)" data-ru="На основе живых позиций (2025–2026)">Based on live positions (2025–2026)</p>
+                    <p class="metrics-footnote" data-en="Average of the same last-12-month APY series as the chart (updates with sheet data)." data-ru="Среднее по той же серии годовых APY за последние 12 мес., что и на графике (обновляется из таблицы).">Average of the same last-12-month APY series as the chart (updates with sheet data).</p>
                     
                     <div class="buttons">
                         <a href="https://t.me/ravilinvest" target="_blank" rel="noopener" class="btn-primary" data-en="Request Allocation" data-ru="Запросить размещение">Request Allocation</a>
@@ -1348,8 +1385,15 @@
             </div>
             
             <div class="chart-container">
-                <div class="chart-block-title" data-en="Capital path (illustrative volatility band)" data-ru="Траектория капитала (иллюстративный коридор волатильности)">Capital path (illustrative volatility band)</div>
-                <div class="chart-block-sub" data-en="Early quarters: position can be down to about -25% or up to about +10% vs entry; band persists over time. Illustration only — not a forecast." data-ru="В первые кварталы позиция может уходить примерно до −25% или до +10% к входу; коридор сохраняется и дальше. Только иллюстрация — не прогноз.">Early quarters: position can be down to about -25% or up to about +10% vs entry; band persists over time. Illustration only — not a forecast.</div>
+                <div class="capital-chart-head">
+                    <div class="chart-block-title" data-en="Capital path (illustrative volatility band)" data-ru="Траектория капитала (иллюстративный коридор волатильности)">Capital path (illustrative volatility band)</div>
+                    <div class="capital-range-toggle" id="capitalBandRangeGroup" role="group" aria-label="Chart horizon">
+                        <button type="button" class="capital-range-btn" data-range="6m" data-en="6 mo" data-ru="6 мес">6 mo</button>
+                        <button type="button" class="capital-range-btn" data-range="2y" data-en="2 yr" data-ru="2 г">2 yr</button>
+                        <button type="button" class="capital-range-btn active" data-range="5y" data-en="5 yr" data-ru="5 лет">5 yr</button>
+                    </div>
+                </div>
+                <div class="chart-block-sub" id="capitalBandRangeHint"></div>
                 <canvas id="capitalBandChart"></canvas>
                 <p class="chart-disclaimer" data-en="Based on historical yield distribution. Not a projection or guarantee." data-ru="На основе исторического распределения доходности. Не прогноз и не гарантия.">Based on historical yield distribution. Not a projection or guarantee.</p>
             </div>
@@ -1584,6 +1628,8 @@
         // ===== MULTI-LANGUAGE =====
         let currentLang = 'en';
         var lastMonthlyParsed = null;
+        /** Capital path horizon: '6m' | '2y' | '5y' */
+        var capitalBandRange = '5y';
 
         function switchLang(lang) {
             currentLang = lang;
@@ -1843,21 +1889,69 @@
         }
 
         /**
-         * Иллюстрация: тренд ~30% APR; коридор относительно тренда — в начале до ~−25% / +10% к входу,
-         * дальше сохраняется заметная ширина (не схлопывается к 100k по нижней границе).
+         * Иллюстрация: тренд ~30% APR; коридор — в начале до ~−25% / +10% к входу.
+         * rangeKey '6m': крупный план первых полугодия — просадка ~−25% к 2–3 мес., итог ~−10% к 6 мес. при учёте carry.
          */
-        function buildBandSeries() {
-            var months = 60;
+        function buildBandSeries(rangeKey) {
             var start = 100000;
+            var seed = 1337;
+            function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+
+            if (rangeKey === '6m') {
+                var labels6 = [];
+                var trend6 = [];
+                var lower6 = [];
+                var upper6 = [];
+                var center6 = [];
+                var targetsPct = [100, 91, 75, 76.5, 82, 86.5, 90];
+                for (var mi = 0; mi <= 6; mi++) {
+                    labels6.push(mi === 0
+                        ? (currentLang === 'ru' ? 'Старт' : 'Start')
+                        : (currentLang === 'ru' ? (mi + ' мес') : (mi + ' mo')));
+                    var T6 = start * Math.pow(1.3, mi / 12);
+                    trend6.push(T6);
+                    var w6 = Math.exp(-mi / 4);
+                    var lowPct6 = 0.25 * w6 + 0.17 * (1 - w6);
+                    var highPct6 = 0.10 * w6 + 0.18 * (1 - w6);
+                    var L6 = T6 * (1 - lowPct6);
+                    var U6 = T6 * (1 + highPct6);
+                    lower6.push(L6);
+                    upper6.push(U6);
+                    var C6 = start * (targetsPct[mi] / 100);
+                    C6 += start * 0.014 * Math.sin(mi * 1.85 + 0.2) * (mi > 0 ? 1 : 0);
+                    C6 += start * (rnd() - 0.5) * 0.005;
+                    C6 = Math.min(Math.max(C6, L6), U6);
+                    center6.push(C6);
+                }
+                return {
+                    labels: labels6,
+                    upper: upper6,
+                    lower: lower6,
+                    center: center6,
+                    trend: trend6,
+                    start: start,
+                    rangeKey: '6m'
+                };
+            }
+
+            var monthMax = rangeKey === '2y' ? 24 : 60;
             var labels = [];
             var upper = [];
             var lower = [];
             var center = [];
             var trend = [];
-            var seed = 1337;
-            function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+
             function xLabel(m) {
                 if (m === 0) return currentLang === 'ru' ? 'Старт' : 'Start';
+                if (m === monthMax) {
+                    if (monthMax === 60) return currentLang === 'ru' ? '5 лет' : '5 yr';
+                    if (monthMax === 24) return currentLang === 'ru' ? '2 года' : '2 yr';
+                    return currentLang === 'ru' ? (m + ' мес') : (m + ' mo');
+                }
+                if (monthMax <= 24) {
+                    if (m % 2 === 0) return currentLang === 'ru' ? (m + ' мес') : (m + ' mo');
+                    return '';
+                }
                 if (m <= 24) {
                     if (m % 2 === 0) return currentLang === 'ru' ? (m + ' мес') : (m + ' mo');
                     return '';
@@ -1865,7 +1959,8 @@
                 if (m % 12 === 0) return currentLang === 'ru' ? ((m / 12) + ' г') : ((m / 12) + ' yr');
                 return '';
             }
-            for (var m = 0; m <= months; m++) {
+
+            for (var m = 0; m <= monthMax; m++) {
                 labels.push(xLabel(m));
                 var T = start * Math.pow(1.3, m / 12);
                 trend.push(T);
@@ -1883,7 +1978,6 @@
                 if (m === 0) {
                     C = start;
                 } else if (m <= 6) {
-                    // Same wavy character as later months, blended toward ~-10% net by month 6.
                     var p = m / 6;
                     var driftAnchor = start * (1 - 0.10 * Math.pow(p, 0.88));
                     var mix = 0.18 + 0.72 * p;
@@ -1895,7 +1989,33 @@
                 C = Math.min(Math.max(C, L), U);
                 center.push(C);
             }
-            return { labels: labels, upper: upper, lower: lower, center: center, trend: trend, start: start };
+            return {
+                labels: labels,
+                upper: upper,
+                lower: lower,
+                center: center,
+                trend: trend,
+                start: start,
+                rangeKey: rangeKey
+            };
+        }
+
+        function updateCapitalBandHint() {
+            var el = document.getElementById('capitalBandRangeHint');
+            if (!el) return;
+            var ru = currentLang === 'ru';
+            var h = {
+                '6m': ru
+                    ? 'Крупный план первых 6 месяцев: маркировка позиции может уходить до ~−25% к входу (часто ближе ко 2–3 месяцу). За тот же период доходность стратегии (carry / pull-off) может давать порядка +15% к капиталу — в сумме иллюстративный исход около −10% к полугодию. Только иллюстрация максимального стресса — не прогноз и не гарантия.'
+                    : 'Six-month close-up: mark-to-market can reach about −25% vs entry (often around months 2–3). Strategy income (carry / pull-off) over the same window can be on the order of +15% — together, an illustrative net near −10% at six months. Stress illustration only — not a forecast or guarantee.',
+                '2y': ru
+                    ? 'Два года той же иллюстративной динамики: виден выход из раннего стресса и более длинный горизонт коридора. Иллюстрация — не прогноз.'
+                    : 'Two-year slice of the same illustrative path: early stress vs longer-horizon band. Illustration only — not a forecast.',
+                '5y': ru
+                    ? 'Полная пятилетка: в первые кварталы позиция может уходить примерно до −25% или до +10% к входу; коридор сохраняется и дальше. Иллюстрация — не прогноз.'
+                    : 'Full five-year view: early quarters, position can be down to about −25% or up to about +10% vs entry; the band persists over time. Illustration only — not a forecast.'
+            };
+            el.textContent = h[capitalBandRange] || h['5y'];
         }
 
         function updatePerformanceStats(apyAnnualPct) {
@@ -1931,11 +2051,26 @@
             sharpeEl.textContent = sharpe.toFixed(2);
         }
 
+        function updateHeroLiveApy(apyAnnualPct) {
+            var el = document.getElementById('heroLiveApyValue');
+            if (!el) return;
+            if (!apyAnnualPct || apyAnnualPct.length === 0) {
+                el.textContent = '—';
+                return;
+            }
+            var sum = apyAnnualPct.reduce(function (s, v) {
+                return s + (parseFloat(v) || 0);
+            }, 0);
+            var mean = sum / apyAnnualPct.length;
+            el.textContent = mean.toFixed(1) + '%';
+        }
+
         function renderMonthlyCharts(parsed) {
             var labels = parsed.labels;
             var apyAnnualPct = parsed.apyAnnualPct || [];
             lastMonthlyParsed = parsed;
             updatePerformanceStats(apyAnnualPct);
+            updateHeroLiveApy(apyAnnualPct);
             var heroLoad = document.getElementById('heroChartLoading');
             var perfLoad = document.getElementById('perfBarLoading');
             if (heroLoad) heroLoad.style.display = 'none';
@@ -2019,10 +2154,12 @@
         }
 
         function renderBandChart() {
+            updateCapitalBandHint();
             var ctx = document.getElementById('capitalBandChart');
             if (!ctx) return;
             destroyChartIfAny(ctx);
-            var S = buildBandSeries();
+            var S = buildBandSeries(capitalBandRange);
+            var showPathPoints = S.rangeKey === '6m';
             var allY = S.lower.concat(S.upper, S.center, S.trend);
             var dataMin = Math.min.apply(null, allY);
             var dataMax = Math.max.apply(null, allY);
@@ -2084,9 +2221,11 @@
                             borderColor: '#c4a574',
                             backgroundColor: 'transparent',
                             borderWidth: 2,
-                            pointRadius: 0,
+                            pointRadius: showPathPoints ? 4 : 0,
+                            pointHoverRadius: showPathPoints ? 6 : 0,
+                            pointBackgroundColor: '#c4a574',
                             fill: false,
-                            tension: 0.35,
+                            tension: showPathPoints ? 0.25 : 0.35,
                             order: 4
                         }
                     ]
@@ -2135,9 +2274,9 @@
                             grid: { color: 'rgba(255,255,255,0.03)' },
                             ticks: {
                                 color: 'rgba(255,255,255,0.5)',
-                                autoSkip: true,
-                                maxTicksLimit: 16,
-                                maxRotation: 45,
+                                autoSkip: S.rangeKey !== '6m',
+                                maxTicksLimit: S.rangeKey === '6m' ? 12 : 16,
+                                maxRotation: S.rangeKey === '6m' ? 0 : 45,
                                 minRotation: 0,
                                 callback: function (val, idx) {
                                     var lab = S.labels[idx];
@@ -2295,6 +2434,8 @@
 
         loadMonthlyYieldData()
             .catch(function (err) {
+                var heroApyEl = document.getElementById('heroLiveApyValue');
+                if (heroApyEl) heroApyEl.textContent = '—';
                 var heroLoad = document.getElementById('heroChartLoading');
                 var perfLoad = document.getElementById('perfBarLoading');
                 var msg = 'No chart data. Share SYCapital_Data (Anyone with the link → Viewer). ' + (err && err.message ? err.message : '');
@@ -2310,6 +2451,22 @@
             });
 
         renderBandChart();
+
+        (function initCapitalBandRange() {
+            var grp = document.getElementById('capitalBandRangeGroup');
+            if (!grp) return;
+            grp.querySelectorAll('.capital-range-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var r = btn.getAttribute('data-range');
+                    if (!r || r === capitalBandRange) return;
+                    capitalBandRange = r;
+                    grp.querySelectorAll('.capital-range-btn').forEach(function (b) {
+                        b.classList.toggle('active', b.getAttribute('data-range') === r);
+                    });
+                    renderBandChart();
+                });
+            });
+        })();
 
         (function initMobileNav() {
             var burger = document.getElementById('navBurger');
