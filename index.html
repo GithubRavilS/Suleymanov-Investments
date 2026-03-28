@@ -78,7 +78,9 @@
             transition: all 0.3s;
         }
         
-        nav a:hover { color: #F2994A; }
+        nav a:hover,
+        .site-nav .nav-link:hover { color: #F2994A; }
+        .site-nav .nav-link:hover .nav-link-icon { opacity: 0.95; color: #F2994A; }
         
         .header-bar {
             display: flex;
@@ -117,6 +119,72 @@
             padding: 0;
         }
         .nav-burger:hover { background: rgba(255, 255, 255, 0.1); }
+        .nav-drawer-head {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 16px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-drawer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .nav-drawer-logo .logo-box {
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+        }
+        .nav-drawer-close {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 26px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            flex-shrink: 0;
+        }
+        .nav-drawer-close:hover { background: rgba(255, 255, 255, 0.12); }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+        }
+        .nav-link-icon {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.65;
+        }
+        .nav-link-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
         .nav-backdrop {
             display: none;
             position: fixed;
@@ -186,9 +254,11 @@
         .btn-secondary:hover { background: rgba(47, 128, 237, 0.1); transform: translateY(-2px); }
         
         @media (max-width: 768px) {
+            .header-right { margin-left: auto; }
             .header-cta-desktop { display: none !important; }
             .nav-burger { display: flex; }
             .lang-toggle { margin-left: 0; }
+            .nav-drawer-head { display: flex; }
             .site-nav {
                 position: fixed;
                 top: 0;
@@ -197,7 +267,7 @@
                 height: 100vh;
                 height: 100dvh;
                 margin: 0;
-                padding: 72px 20px 24px;
+                padding: 16px 18px 24px;
                 flex-direction: column;
                 align-items: stretch;
                 justify-content: flex-start;
@@ -211,16 +281,31 @@
                 overflow-y: auto;
             }
             .site-nav.is-open { transform: translateX(0); }
-            .site-nav a {
+            .site-nav .nav-link,
+            .site-nav .nav-cta-mobile {
                 padding: 14px 12px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.06);
                 font-size: 15px;
             }
+            .site-nav .nav-cta-mobile {
+                border-bottom: none;
+            }
             .nav-cta-mobile {
                 display: inline-flex !important;
                 justify-content: center;
-                margin-top: 20px;
+                margin-top: 16px;
                 text-align: center;
+                border-radius: 8px;
+            }
+        }
+        @media (min-width: 769px) {
+            .nav-drawer-head { display: none !important; }
+            .site-nav .nav-link-icon { display: none; }
+            .site-nav .nav-link {
+                padding: 0;
+                border: none;
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.7);
             }
         }
         
@@ -1005,12 +1090,34 @@
                 <span>SYCapital</span>
             </a>
             <nav id="siteNav" class="site-nav" aria-label="Main">
-                <a href="#how" data-en="How It Works" data-ru="Как это работает">How It Works</a>
-                <a href="#operator" data-en="About" data-ru="О фонде">About</a>
-                <a href="#performance" data-en="Performance" data-ru="Результаты">Performance</a>
-                <a href="#data" data-en="Live Data" data-ru="Live данные">Live Data</a>
-                <a href="#risk" data-en="Risk" data-ru="Риски">Risk</a>
-                <a href="https://t.me/ravilinvest" target="_blank" rel="noopener" class="btn-primary nav-cta-mobile" data-en="Get Started" data-ru="Начать">Get Started</a>
+                <div class="nav-drawer-head">
+                    <a href="#hero" class="nav-drawer-logo" id="navDrawerLogo">
+                        <div class="logo-box">S</div>
+                        <span>SYCapital</span>
+                    </a>
+                    <button type="button" class="nav-drawer-close" id="navDrawerClose" aria-label="Close menu">×</button>
+                </div>
+                <a href="#how" class="nav-link">
+                    <span class="nav-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 12h3M14 12h3"/></svg></span>
+                    <span class="nav-link-text" data-en="How It Works" data-ru="Как это работает">How It Works</span>
+                </a>
+                <a href="#operator" class="nav-link">
+                    <span class="nav-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span>
+                    <span class="nav-link-text" data-en="About" data-ru="О фонде">About</span>
+                </a>
+                <a href="#performance" class="nav-link">
+                    <span class="nav-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M6 17V9l4 5 4-8 4 6"/></svg></span>
+                    <span class="nav-link-text" data-en="Performance" data-ru="Результаты">Performance</span>
+                </a>
+                <a href="#data" class="nav-link">
+                    <span class="nav-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M10 4v16"/></svg></span>
+                    <span class="nav-link-text" data-en="Live Data" data-ru="Live данные">Live Data</span>
+                </a>
+                <a href="#risk" class="nav-link">
+                    <span class="nav-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3L5 6v6c0 5 3 9 7 10 4-1 7-5 7-10V6l-7-3z"/></svg></span>
+                    <span class="nav-link-text" data-en="Risk" data-ru="Риски">Risk</span>
+                </a>
+                <a href="#performance" class="btn-primary nav-cta-mobile" data-en="Live performance" data-ru="Live — статистика">Live performance</a>
             </nav>
             <div class="header-right">
                 <div class="lang-toggle">
@@ -1156,7 +1263,7 @@
         <div class="container">
             <div class="operator-content">
                 <div class="operator-photo">
-                    <img src="operator-photo-silhouette.png" alt="Ravil Crypto - Founder" class="operator-photo-img" width="400" height="500" decoding="async" fetchpriority="high" onerror="if(!this.dataset._fb){this.dataset._fb=1;this.src=window.OPERATOR_PHOTO_FALLBACK;}">
+                    <img src="" alt="Ravil Crypto - Founder" class="operator-photo-img" width="400" height="500" decoding="async" fetchpriority="high" data-operator-photo>
                 </div>
                 
                 <div class="operator-text">
@@ -1322,7 +1429,7 @@
         <div class="container">
             <div class="operator-content" style="direction: rtl;">
                 <div class="operator-photo" style="direction: ltr;">
-                    <img src="operator-photo-silhouette.png" alt="Ravil Crypto - Founder" class="operator-photo-img" width="400" height="500" decoding="async" fetchpriority="low" onerror="if(!this.dataset._fb){this.dataset._fb=1;this.src=window.OPERATOR_PHOTO_FALLBACK;}">
+                    <img src="" alt="Ravil Crypto - Founder" class="operator-photo-img" width="400" height="500" decoding="async" fetchpriority="low" data-operator-photo>
                 </div>
                 
                 <div class="operator-text" style="direction: ltr;">
@@ -1449,6 +1556,30 @@
             '<path d="M40 500 Q40 280 200 240 Q360 280 360 500 Z" fill="#222a3d"/>' +
             '</svg>'
         );
+
+        function initOperatorPhotos() {
+            var candidates = [
+                'operator-photo-silhouette.png',
+                'operator-photo.png',
+                'ravil-photo.png',
+                'RavilCrypto.png',
+                'images/operator-photo-silhouette.png'
+            ];
+            document.querySelectorAll('img[data-operator-photo]').forEach(function (img) {
+                var idx = 0;
+                function onFail() {
+                    idx += 1;
+                    if (idx < candidates.length) {
+                        img.src = candidates[idx];
+                    } else {
+                        img.removeEventListener('error', onFail);
+                        img.src = window.OPERATOR_PHOTO_FALLBACK;
+                    }
+                }
+                img.addEventListener('error', onFail);
+                img.src = candidates[0];
+            });
+        }
 
         // ===== MULTI-LANGUAGE =====
         let currentLang = 'en';
@@ -2184,6 +2315,7 @@
             var burger = document.getElementById('navBurger');
             var nav = document.getElementById('siteNav');
             var backdrop = document.getElementById('navBackdrop');
+            var drawerClose = document.getElementById('navDrawerClose');
             if (!burger || !nav) return;
             function closeMenu() {
                 nav.classList.remove('is-open');
@@ -2207,6 +2339,7 @@
                 if (nav.classList.contains('is-open')) closeMenu();
                 else openMenu();
             });
+            if (drawerClose) drawerClose.addEventListener('click', closeMenu);
             if (backdrop) backdrop.addEventListener('click', closeMenu);
             nav.querySelectorAll('a').forEach(function (a) {
                 a.addEventListener('click', function () {
@@ -2217,6 +2350,8 @@
                 if (!window.matchMedia('(max-width: 768px)').matches) closeMenu();
             });
         })();
+
+        initOperatorPhotos();
 
         document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
             anchor.addEventListener('click', function (e) {
