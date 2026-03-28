@@ -1890,51 +1890,28 @@
 
         /**
          * Иллюстрация: тренд ~30% APR; коридор — в начале до ~−25% / +10% к входу.
-         * rangeKey '6m': крупный план первых полугодия — просадка ~−25% к 2–3 мес., итог ~−10% к 6 мес. при учёте carry.
+         * Первые 0–6 мес.: одна общая детерминированная «волна» (синусоиды) для всех горизонтов — 6m / 2y / 5y совпадают.
+         * С 7-го месяца — прежняя волатильная логика (без изменений по смыслу).
          */
         function buildBandSeries(rangeKey) {
             var start = 100000;
+            var monthMax = rangeKey === '6m' ? 6 : (rangeKey === '2y' ? 24 : 60);
             var seed = 1337;
             function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
 
-            if (rangeKey === '6m') {
-                var labels6 = [];
-                var trend6 = [];
-                var lower6 = [];
-                var upper6 = [];
-                var center6 = [];
-                var targetsPct = [100, 91, 75, 76.5, 82, 86.5, 90];
-                for (var mi = 0; mi <= 6; mi++) {
-                    labels6.push(mi === 0
-                        ? (currentLang === 'ru' ? 'Старт' : 'Start')
-                        : (currentLang === 'ru' ? (mi + ' мес') : (mi + ' mo')));
-                    var T6 = start * Math.pow(1.3, mi / 12);
-                    trend6.push(T6);
-                    var w6 = Math.exp(-mi / 4);
-                    var lowPct6 = 0.25 * w6 + 0.17 * (1 - w6);
-                    var highPct6 = 0.10 * w6 + 0.18 * (1 - w6);
-                    var L6 = T6 * (1 - lowPct6);
-                    var U6 = T6 * (1 + highPct6);
-                    lower6.push(L6);
-                    upper6.push(U6);
-                    var C6 = start * (targetsPct[mi] / 100);
-                    C6 += start * 0.014 * Math.sin(mi * 1.85 + 0.2) * (mi > 0 ? 1 : 0);
-                    C6 += start * (rnd() - 0.5) * 0.005;
-                    C6 = Math.min(Math.max(C6, L6), U6);
-                    center6.push(C6);
-                }
-                return {
-                    labels: labels6,
-                    upper: upper6,
-                    lower: lower6,
-                    center: center6,
-                    trend: trend6,
-                    start: start,
-                    rangeKey: '6m'
-                };
+            /** Единая кривая первых 6 месяцев: плавное снижение с «ямы» ~−23…25% к месяцу 3 и выход ~−10% к 6-му. */
+            function firstSixMonthCapital(m, L, U) {
+                if (m === 0) return start;
+                var lin = 1 + (0.90 - 1) * (m / 6);
+                var dip = 0.205 * Math.pow(Math.sin((Math.PI * m) / 6), 2);
+                var pct = lin - dip;
+                pct += 0.026 * Math.sin((2 * Math.PI * m) / 6 + 0.38);
+                pct += 0.016 * Math.sin((4 * Math.PI * m) / 6 + 1.05);
+                pct += 0.009 * Math.sin((6 * Math.PI * m) / 6 + 0.2);
+                var C = start * pct;
+                return Math.min(Math.max(C, L), U);
             }
 
-            var monthMax = rangeKey === '2y' ? 24 : 60;
             var labels = [];
             var upper = [];
             var lower = [];
@@ -1943,6 +1920,9 @@
 
             function xLabel(m) {
                 if (m === 0) return currentLang === 'ru' ? 'Старт' : 'Start';
+                if (monthMax === 6) {
+                    return currentLang === 'ru' ? (m + ' мес') : (m + ' mo');
+                }
                 if (m === monthMax) {
                     if (monthMax === 60) return currentLang === 'ru' ? '5 лет' : '5 yr';
                     if (monthMax === 24) return currentLang === 'ru' ? '2 года' : '2 yr';
@@ -1971,22 +1951,16 @@
                 var U = T * (1 + highPct);
                 lower.push(L);
                 upper.push(U);
-                var span = Math.max(U - L, 1);
-                var wave = 0.5 + 0.48 * Math.sin(m * 0.42) + 0.12 * Math.sin(m * 1.1);
-                var C = L + span * Math.min(1, Math.max(0, wave));
-                C += (rnd() - 0.5) * span * 0.06;
-                if (m === 0) {
-                    C = start;
-                } else if (m <= 6) {
-                    var p = m / 6;
-                    var driftAnchor = start * (1 - 0.10 * Math.pow(p, 0.88));
-                    var mix = 0.18 + 0.72 * p;
-                    C = C * (1 - mix) + driftAnchor * mix;
-                    C += start * 0.018 * Math.sin(m * 2.4 + 0.35);
-                    C += start * 0.008 * Math.sin(m * 4.1);
-                    C += start * (rnd() - 0.5) * 0.008;
+                var C;
+                if (m <= 6) {
+                    C = firstSixMonthCapital(m, L, U);
+                } else {
+                    var span = Math.max(U - L, 1);
+                    var wave = 0.5 + 0.48 * Math.sin(m * 0.42) + 0.12 * Math.sin(m * 1.1);
+                    C = L + span * Math.min(1, Math.max(0, wave));
+                    C += (rnd() - 0.5) * span * 0.06;
+                    C = Math.min(Math.max(C, L), U);
                 }
-                C = Math.min(Math.max(C, L), U);
                 center.push(C);
             }
             return {
